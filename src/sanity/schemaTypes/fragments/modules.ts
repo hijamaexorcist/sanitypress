@@ -30,6 +30,7 @@ export default defineField({
 		{ type: 'testimonial-list' },
 		{ type: 'testimonial.featured' },
 		{ type: 'text-highlight-module' },
+		{ type: 'contact-form-module' },
 	],
 	options: {
 		insertMenu: {
@@ -61,6 +62,7 @@ export default defineField({
 						'step-list',
 						'testimonial-list',
 						'text-highlight-module',
+						'contact-form-module',
 					],
 				},
 				{

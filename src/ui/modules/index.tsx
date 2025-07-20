@@ -20,6 +20,7 @@ import TabbedContent from './TabbedContent'
 import TestimonialList from './TestimonialList'
 import TestimonialFeatured from './TestimonialFeatured'
 import TextHighlightModule from './TextHighlightModule'
+import ContactFormModule from './ContactFormModule'
 
 import dynamic from 'next/dynamic'
 import { createDataAttribute } from 'next-sanity'
@@ -50,6 +51,7 @@ const MODULE_MAP = {
 	'testimonial-list': TestimonialList,
 	'testimonial.featured': TestimonialFeatured,
 	'text-highlight-module': TextHighlightModule,
+	'contact-form-module': ContactFormModule,
 } as const
 
 export default function Modules({

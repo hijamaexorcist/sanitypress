@@ -9,6 +9,7 @@ import VisualEditingControls from '@/ui/VisualEditingControls'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import '@/styles/app.css'
+import Script from 'next/script'
 
 export default async function RootLayout({
 	children,
@@ -19,6 +20,11 @@ export default async function RootLayout({
 		<Root>
 			{/* <GoogleTagManager gtmId="" /> */}
 			<body className="bg-canvas text-ink antialiased">
+				{/* ✅ Load reCAPTCHA V3 globally */}
+				<Script
+					src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+					strategy="beforeInteractive"
+				/>
 				<NuqsAdapter>
 					<SkipToContent />
 					<Announcement />

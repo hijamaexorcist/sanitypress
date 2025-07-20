@@ -52,6 +52,7 @@ import tabbedContent from './modules/tabbed-content'
 import testimonialFeatured from './modules/testimonial.featured'
 import testimonialList from './modules/testimonial-list'
 import textHighlightModule from './modules/text-highlight-module'
+import contactFormModule from './modules/contact-form'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
 	// documents
@@ -106,4 +107,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
 	testimonialFeatured,
 	testimonialList,
 	textHighlightModule,
+	contactFormModule,
 ]
