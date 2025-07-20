@@ -29,6 +29,7 @@ export default defineField({
 		{ type: 'tabbed-content' },
 		{ type: 'testimonial-list' },
 		{ type: 'testimonial.featured' },
+		{ type: 'text-highlight-module' },
 	],
 	options: {
 		insertMenu: {
@@ -59,6 +60,7 @@ export default defineField({
 						'stat-list',
 						'step-list',
 						'testimonial-list',
+						'text-highlight-module',
 					],
 				},
 				{

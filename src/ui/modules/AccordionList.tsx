@@ -52,59 +52,60 @@ export default function AccordionList({
 			</header>
 
 			<div className="mx-auto w-full max-w-screen-md">
-				{items?.map(({ summary, content, open }, key) => (
-					<details
-						className="accordion border-ink/10 border-b"
-						name={connect ? props._key : undefined}
-						open={open}
-						{...(generateSchema && {
-							itemScope: true,
-							itemProp: 'mainEntity',
-							itemType: 'https://schema.org/Question',
-						})}
-						key={key}
-					>
-						<summary
-							className="py-4 font-bold"
-							{...(generateSchema && { itemProp: 'name' })}
-						>
-							{summary}
-						</summary>
+  {items?.map(({ summary, content, open }, index) => (
+    <details
+      key={`${props._key}-${index}`}
+      className="accordion border-ink/10 border-b"
+      name={connect ? props._key : undefined}
+      open={open}
+      {...(generateSchema && {
+        itemScope: true,
+        itemProp: 'mainEntity',
+        itemType: 'https://schema.org/Question',
+      })}
+    >
+      <summary
+        className="py-4 font-bold"
+        {...(generateSchema && { itemProp: 'name' })}
+      >
+        {summary}
+      </summary>
 
-						<div
-							className="anim-fade-to-b pb-4"
-							{...(generateSchema && {
-								itemScope: true,
-								itemProp: 'acceptedAnswer',
-								itemType: 'https://schema.org/Answer',
-							})}
-						>
-							<div
-								className="richtext"
-								{...(generateSchema && {
-									itemProp: 'text',
-								})}
-							>
-								<PortableText
-									value={content}
-									components={{
-										types: {
-											image: Image,
-											code: Code,
-											'custom-html': ({ value }) => (
-												<CustomHTML
-													className="has-[table]:md:[grid-column:bleed] has-[table]:md:mx-auto"
-													{...value}
-												/>
-											),
-										},
-									}}
-								/>
-							</div>
-						</div>
-					</details>
-				))}
-			</div>
+      <div
+        className="anim-fade-to-b pb-4"
+        {...(generateSchema && {
+          itemScope: true,
+          itemProp: 'acceptedAnswer',
+          itemType: 'https://schema.org/Answer',
+        })}
+      >
+        <div
+          className="richtext"
+          {...(generateSchema && {
+            itemProp: 'text',
+          })}
+        >
+          <PortableText
+            value={content}
+            components={{
+              types: {
+                image: Image,
+                code: Code,
+                'custom-html': ({ value }) => (
+                  <CustomHTML
+                    className="has-[table]:md:[grid-column:bleed] has-[table]:md:mx-auto"
+                    {...value}
+                  />
+                ),
+              },
+            }}
+          />
+        </div>
+      </div>
+    </details>
+  ))}
+</div>
+
 		</section>
 	)
 }

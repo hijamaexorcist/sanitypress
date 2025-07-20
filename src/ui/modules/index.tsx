@@ -19,6 +19,7 @@ import StepList from './StepList'
 import TabbedContent from './TabbedContent'
 import TestimonialList from './TestimonialList'
 import TestimonialFeatured from './TestimonialFeatured'
+import TextHighlightModule from './TextHighlightModule'
 
 import dynamic from 'next/dynamic'
 import { createDataAttribute } from 'next-sanity'
@@ -48,6 +49,7 @@ const MODULE_MAP = {
 	'tabbed-content': TabbedContent,
 	'testimonial-list': TestimonialList,
 	'testimonial.featured': TestimonialFeatured,
+	'text-highlight-module': TextHighlightModule,
 } as const
 
 export default function Modules({
@@ -75,7 +77,7 @@ export default function Modules({
 			{modules?.map((module) => {
 				if (!module) return null
 
-				const Component = MODULE_MAP[module._type as keyof typeof MODULE_MAP]
+				const Component = MODULE_MAP[module._type as keyof typeof MODULE_MAP] as React.ComponentType<any>
 
 				if (!Component) return null
 

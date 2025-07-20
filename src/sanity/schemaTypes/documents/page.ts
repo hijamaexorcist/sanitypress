@@ -60,7 +60,8 @@ export default defineType({
 				(slug === '404' && VscQuestion) ||
 				(slug === 'search' && VscSearch) ||
 				(slug === BLOG_DIR && VscEdit) ||
-				(slug.startsWith('docs') && VscMortarBoard) ||
+				// (slug.startsWith('docs') && VscMortarBoard) ||
+				(VscMortarBoard) ||
 				(noindex && VscEyeClosed),
 		}),
 	},
