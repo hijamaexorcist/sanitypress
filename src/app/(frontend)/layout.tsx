@@ -16,15 +16,19 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
+	const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
 	return (
 		<Root>
 			{/* <GoogleTagManager gtmId="" /> */}
 			<body className="bg-canvas text-ink antialiased">
-				{/* ✅ Load reCAPTCHA V3 globally */}
-				<Script
-					src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-					strategy="beforeInteractive"
-				/>
+				{/* ✅ Load reCAPTCHA V3 globally - only if site key exists */}
+				{recaptchaSiteKey && (
+					<Script
+						src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
+						strategy="afterInteractive"
+					/>
+				)}
 				<NuqsAdapter>
 					<SkipToContent />
 					<Announcement />
@@ -33,10 +37,8 @@ export default async function RootLayout({
 						{children}
 					</main>
 					<Footer />
-
 					<VisualEditingControls />
 				</NuqsAdapter>
-
 				<Analytics />
 				<SpeedInsights />
 			</body>
