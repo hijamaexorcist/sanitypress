@@ -27,7 +27,7 @@ export default defineType({
       name: 'showRecaptcha',
       title: 'Enable reCAPTCHA?',
       type: 'boolean',
-      initialValue: false,
+      initialValue: true,
     }),
     defineField({
       name: 'reasonOptions',
