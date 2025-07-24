@@ -73,7 +73,7 @@ export default function ContactFormModule({
   _key,
   ...props
 }: ContactFormModuleProps) {
-  const fallbackReasons = ['General Inquiry', 'Partnership', 'Support', 'Feedback']
+  const fallbackReasons = ['General Inquiry', 'Support', 'Feedback']
   const reasons = reasonOptions?.length ? reasonOptions : fallbackReasons
   
   const [formData, setFormData] = useState({
