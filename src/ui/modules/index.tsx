@@ -21,7 +21,7 @@ import TestimonialList from './TestimonialList'
 import TestimonialFeatured from './TestimonialFeatured'
 import TextHighlightModule from './TextHighlightModule'
 import ContactFormModule from './ContactFormModule'
-import AppointmentForm from './AppointmentForm'
+import AppointmentFormModule from './appointmentFormModule'
 import dynamic from 'next/dynamic'
 import { createDataAttribute } from 'next-sanity'
 
@@ -52,7 +52,7 @@ const MODULE_MAP = {
 	'testimonial.featured': TestimonialFeatured,
 	'text-highlight-module': TextHighlightModule,
 	'contact-form-module': ContactFormModule,
-	'appointment-form': AppointmentForm,
+	'appointment-form-module': AppointmentFormModule,
 } as const
 
 export default function Modules({
