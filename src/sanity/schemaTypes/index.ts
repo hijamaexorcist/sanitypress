@@ -54,6 +54,8 @@ import testimonialList from './modules/testimonial-list'
 import textHighlightModule from './modules/text-highlight-module'
 import contactFormModule from './modules/contact-form'
 import appointmentForm from './modules/appointment-form'
+import careJourney from './modules/care-journey'
+import careStandards from './modules/care-standards'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
 	// documents
@@ -110,4 +112,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
 	textHighlightModule,
 	contactFormModule,
 	appointmentForm,
+	careJourney,
+	careStandards,
 ]

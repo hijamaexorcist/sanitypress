@@ -32,6 +32,8 @@ export default defineField({
 				{ type: 'text-highlight-module' },
 				{ type: 'contact-form-module' },
 				{ type: 'appointment-form-module' },
+				{ type: 'care-journey' },
+				{ type: 'care-standards' },
 			],
 	options: {
 		insertMenu: {
@@ -68,6 +70,10 @@ export default defineField({
 				{
 					name: 'forms',
 					of: ['contact-form-module', 'appointment-form-module'],
+				},
+				{
+					name: 'clinic',
+					of: ['care-journey', 'care-standards'],
 				},
 				{
 					name: 'testimonials',
