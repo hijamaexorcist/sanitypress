@@ -35,14 +35,7 @@ export default defineType({
 		defineField({
 			name: 'ic0n',
 			title: 'ic0n',
-			description: (
-				<span>
-					Courtesy of{' '}
-					<a href="https://react-icons.github.io/react-icons/" target="_blank">
-						react-icons
-					</a>
-				</span>
-			),
+			description: 'Choose an icon from react-icons.github.io/react-icons/.',
 			type: 'string',
 			placeholder: 'e.g. fa6/FaFacebook, etc.',
 			validation: (Rule) => Rule.regex(/[a-z0-9]{2,3}\/([a-zA-Z0-9]+)/),
