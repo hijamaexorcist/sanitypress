@@ -33,26 +33,26 @@ export default function Hero({
 	return (
 		<section
 			className={cn(
-				hasImage &&
-					'bg-ink text-canvas grid overflow-hidden *:col-span-full *:row-span-full',
+				'section grid min-h-[min(760px,calc(100dvh-var(--header-height)))] items-center gap-10 md:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.8fr)] md:gap-16',
 			)}
 			{...moduleProps(props)}
 		>
 			{hasImage && (
+				<div className="clinic-shell order-first overflow-hidden md:order-last">
 				<ResponsiveImg
 					img={asset}
-					className="max-h-fold size-full object-cover"
+					className="clinic-core aspect-[4/5] size-full object-cover"
 					width={2400}
 					draggable={false}
 				/>
+				</div>
 			)}
 
 			{content && (
-				<div className="section flex w-full flex-col text-balance">
+				<div className="flex w-full flex-col text-balance">
 					<div
 						className={cn(
-							'richtext headings:text-balance relative isolate max-w-xl',
-							hasImage && 'text-shadow',
+							'richtext headings:text-balance relative isolate max-w-2xl',
 							{
 								'mb-8': alignItems === 'start',
 								'my-auto': alignItems === 'center',
@@ -64,7 +64,7 @@ export default function Hero({
 						)}
 						style={{ textAlign }}
 					>
-						<Pretitle className={cn(hasImage && 'text-canvas/70')}>
+						<Pretitle className="clinic-kicker">
 							{pretitle}
 						</Pretitle>
 

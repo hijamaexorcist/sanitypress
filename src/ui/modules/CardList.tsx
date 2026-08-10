@@ -31,10 +31,10 @@ export default function CardList({
 	const isCarousel = stegaClean(layout) === 'carousel'
 
 	return (
-		<section className="section space-y-12" {...moduleProps(props)}>
+		<section className="section space-y-14" {...moduleProps(props)}>
 			{(pretitle || intro) && (
-				<header className="richtext text-center">
-					<Pretitle>{pretitle}</Pretitle>
+				<header className="richtext mx-auto max-w-2xl text-center">
+					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText value={intro} />
 					<CTAList className="justify-center" ctas={ctas} />
 				</header>
@@ -42,7 +42,7 @@ export default function CardList({
 
 			<div
 				className={cn(
-					'items-stretch gap-8',
+					'items-stretch gap-6',
 					isCarousel
 						? 'carousel max-md:full-bleed md:overflow-fade-r pb-4 max-md:px-4'
 						: [
@@ -63,13 +63,13 @@ export default function CardList({
 				{cards?.map((card, key) => (
 					<article
 						className={cn(
-							'flex flex-col gap-2',
-							visualSeparation && 'border-ink/10 border p-4',
+							'clinic-shell flex flex-col gap-4 p-1.5',
+							visualSeparation && 'bg-clinic-mist/60',
 						)}
 						key={key}
 					>
 						{card.image && (
-							<figure>
+							<figure className="clinic-core overflow-hidden">
 								<Img
 									className="aspect-video w-full object-cover"
 									image={card.image}
@@ -78,10 +78,10 @@ export default function CardList({
 							</figure>
 						)}
 
-						<div className="richtext grow">
+						<div className="richtext grow px-5 pt-2">
 							<PortableText value={card.content} />
 						</div>
-						<CTAList className="mt-auto" ctas={card.ctas} />
+						<CTAList className="mt-auto px-5 pb-5" ctas={card.ctas} />
 					</article>
 				))}
 			</div>

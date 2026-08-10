@@ -17,25 +17,25 @@ export default function PersonList({
 	const isCarousel = stegaClean(layout) === 'carousel'
 
 	return (
-		<section className="section space-y-12 text-center">
+		<section className="section space-y-14">
 			{(pretitle || intro) && (
-				<header className="richtext">
-					<Pretitle>{pretitle}</Pretitle>
+				<header className="richtext max-w-2xl">
+					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText value={intro} />
 				</header>
 			)}
 
 			<ul
 				className={cn(
-					'items-start gap-8',
+					'items-start gap-10',
 					isCarousel
 						? 'carousel max-md:full-bleed md:overflow-fade-r pb-4 max-md:px-4'
 						: 'grid *:h-full max-md:pb-4 md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]',
 				)}
 			>
 				{people?.map((person, key) => (
-					<li className="richtext" key={key}>
-						<figure className="aspect-square overflow-hidden">
+					<li className="clinic-shell richtext p-1.5" key={key}>
+						<figure className="clinic-core aspect-[4/5] overflow-hidden">
 							<Img
 								className="aspect-square w-full object-cover"
 								image={person.image}

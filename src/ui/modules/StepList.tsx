@@ -13,18 +13,18 @@ export default function StepList({
 	}[]
 }>) {
 	return (
-		<section className="section space-y-8">
+		<section className="section space-y-14">
 			{(pretitle || intro) && (
-				<header className="richtext mx-auto max-w-xl text-center text-balance">
-					<Pretitle>{pretitle}</Pretitle>
+				<header className="richtext mx-auto max-w-2xl text-center text-balance">
+					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText value={intro} />
 				</header>
 			)}
 
-			<ol className="grid gap-8 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
+			<ol className="grid gap-5 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
 				{steps?.map((step, index) => (
-					<li className="grid grid-cols-[auto_1fr] gap-2" key={index}>
-						<b className="text-gradient aspect-square h-[1em] -translate-y-4 text-center text-6xl tabular-nums">
+					<li className="clinic-shell grid grid-cols-[auto_1fr] gap-4 p-6" key={index}>
+						<b className="bg-clinic-sage/70 text-accent grid size-11 place-items-center rounded-full text-sm tabular-nums">
 							{index + 1}
 						</b>
 
