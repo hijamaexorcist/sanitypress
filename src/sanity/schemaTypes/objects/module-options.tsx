@@ -5,6 +5,36 @@ import { defineField, defineType } from 'sanity'
 import { Box, Button, Flex, Text, TextInput } from '@sanity/ui'
 import { VscCheck, VscCopy } from 'react-icons/vsc'
 
+function UidInput({ elementProps, path }: any) {
+	const indexOfModule = path.indexOf('modules')
+	const moduleKey = (path[indexOfModule + 1] as any)?._key
+	const [checked, setChecked] = useState(false)
+	const { style: _style, ...textInputProps } = elementProps
+
+	return (
+		<Flex align="center" gap={1}>
+			<Text muted>#</Text>
+
+			<Box flex={1}>
+				<TextInput {...textInputProps} placeholder={moduleKey} />
+			</Box>
+
+			<Button
+				title="Click to copy"
+				mode="ghost"
+				icon={checked ? VscCheck : VscCopy}
+				disabled={checked}
+				onClick={() => {
+					navigator.clipboard.writeText('#' + (elementProps.value || moduleKey))
+
+					setChecked(true)
+					setTimeout(() => setChecked(false), 1000)
+				}}
+			/>
+		</Flex>
+	)
+}
+
 export default defineType({
 	name: 'module-options',
 	title: 'Module options',
@@ -26,36 +56,7 @@ export default defineType({
 					'Must not contain spaces or special characters',
 				),
 			components: {
-				input: ({ elementProps, path }) => {
-					const indexOfModule = path.indexOf('modules')
-					const moduleKey = (path[indexOfModule + 1] as any)?._key
-					const [checked, setChecked] = useState(false)
-
-					return (
-						<Flex align="center" gap={1}>
-							<Text muted>#</Text>
-
-							<Box flex={1}>
-								<TextInput {...elementProps} placeholder={moduleKey} />
-							</Box>
-
-							<Button
-								title="Click to copy"
-								mode="ghost"
-								icon={checked ? VscCheck : VscCopy}
-								disabled={checked}
-								onClick={() => {
-									navigator.clipboard.writeText(
-										'#' + (elementProps.value || moduleKey),
-									)
-
-									setChecked(true)
-									setTimeout(() => setChecked(false), 1000)
-								}}
-							/>
-						</Flex>
-					)
-				},
+				input: UidInput,
 			},
 		}),
 	],

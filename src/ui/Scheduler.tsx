@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function Scheduler({
 	start,
@@ -11,19 +11,22 @@ export default function Scheduler({
 	end: string
 	children: React.ReactNode
 }>) {
-	if (!start && !end) return children
+	const hasSchedule = !!start || !!end
 
-	function checkActive() {
+	const checkActive = useCallback(() => {
 		const now = new Date()
 		return (!start || new Date(start) < now) && (!end || new Date(end) > now)
-	}
+	}, [end, start])
 
 	const [isActive, setIsActive] = useState(checkActive())
 
 	useEffect(() => {
+		if (!hasSchedule) return
 		const interval = setInterval(() => setIsActive(checkActive()), 1000) // check every second
 		return () => clearInterval(interval)
-	}, [])
+	}, [checkActive, hasSchedule])
+
+	if (!hasSchedule) return children
 
 	if (!isActive) return null
 

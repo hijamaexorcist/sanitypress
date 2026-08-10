@@ -1,6 +1,10 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { VscFileMedia } from 'react-icons/vsc'
-import { getPreset, TextInputWithPresets, type Preset } from 'sanitypress-utils'
+import {
+	getPreset,
+	TextInputWithPresets,
+	type Preset,
+} from '@/sanity/ui/TextInputWithPresets'
 import { count } from '@/lib/utils'
 
 const presets: Preset[] = [
@@ -54,7 +58,7 @@ export default defineType({
 									<TextInputWithPresets
 										prefix="@media"
 										presets={presets}
-										{...props}
+										{...(props as any)}
 									/>
 								),
 							},

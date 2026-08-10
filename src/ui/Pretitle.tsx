@@ -1,5 +1,10 @@
 import { cn } from '@/lib/utils'
 import { stegaClean } from 'next-sanity'
+import type { ReactNode } from 'react'
+
+function cleanText(value: ReactNode) {
+	return typeof value === 'string' ? stegaClean(value) : value
+}
 
 export default function Pretitle({
 	className,
@@ -9,7 +14,7 @@ export default function Pretitle({
 
 	return (
 		<p className={cn('technical text-ink/65', className)}>
-			{stegaClean(children)}
+			{cleanText(children)}
 		</p>
 	)
 }

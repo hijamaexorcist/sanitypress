@@ -1,6 +1,10 @@
-import { Fragment } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import CTA from '@/ui/CTA'
 import { stegaClean } from 'next-sanity'
+
+function cleanText(value: ReactNode) {
+	return typeof value === 'string' ? stegaClean(value) : value
+}
 
 export default async function Breadcrumbs({
 	crumbs,
@@ -51,7 +55,7 @@ function Crumb({
 	const content = (
 		<>
 			<span itemProp="name" hidden={hidden}>
-				{stegaClean(
+				{cleanText(
 					children || link?.label || link?.internal?.title || link?.external,
 				)}
 			</span>

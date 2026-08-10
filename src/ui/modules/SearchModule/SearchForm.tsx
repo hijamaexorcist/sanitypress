@@ -69,7 +69,7 @@ export default function SearchForm({
 								<p className="text-ink/50 text-center text-sm">
 									<span className="line-clamp-1">
 										{count(results, 'result')} found for{' '}
-										<output>"{query}"</output>
+										<output>&quot;{query}&quot;</output>
 									</span>
 								</p>
 

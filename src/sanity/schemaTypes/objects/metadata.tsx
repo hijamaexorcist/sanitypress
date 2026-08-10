@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { CharacterCount } from 'sanitypress-utils'
+import { CharacterCount } from '@/sanity/ui/CharacterCount'
 import PreviewOG from '@/sanity/ui/PreviewOG'
 
 export default defineType({
@@ -23,7 +23,7 @@ export default defineType({
 			validation: (Rule) => Rule.max(60).warning(),
 			components: {
 				input: (props) => (
-					<CharacterCount max={60} {...props}>
+					<CharacterCount max={60} {...(props as any)}>
 						<PreviewOG title={props.elementProps.value} />
 					</CharacterCount>
 				),
@@ -34,7 +34,9 @@ export default defineType({
 			type: 'text',
 			validation: (Rule) => Rule.max(160).warning(),
 			components: {
-				input: (props) => <CharacterCount as="textarea" max={160} {...props} />,
+				input: (props) => (
+					<CharacterCount as="textarea" max={160} {...(props as any)} />
+				),
 			},
 		}),
 		defineField({

@@ -438,10 +438,10 @@ export default function AppointmentFormModule({
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
                 The Prophet ﷺ recommended Hijama on the 17th, 19th, and 21st of the lunar month. 
-                Also beneficial are the "white days" - 13th, 14th, and 15th.
+                Also beneficial are the &quot;white days&quot; - 13th, 14th, and 15th.
               </p>
               <div className="space-y-2">
-                <p className="text-sm font-medium">This month's Sunnah days:</p>
+                <p className="text-sm font-medium">This month&apos;s Sunnah days:</p>
                 {currentMonthSunnahDays.length > 0 ? (
                   <div className="space-y-1">
                     {currentMonthSunnahDays.map((date, i) => (
