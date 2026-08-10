@@ -187,8 +187,6 @@ declare global {
 			links?: Link[]
 		}
 
-
-
 		interface Metadata {
 			slug: { current: string }
 			title: string
@@ -205,13 +203,6 @@ declare global {
 				hidden?: boolean
 				uid?: string
 			}
-		}
-	}
-
-	interface Window {
-		grecaptcha: {
-			ready: (cb: () => void) => void
-			execute: (siteKey: string, options: { action: string }) => Promise<string>
 		}
 	}
 }

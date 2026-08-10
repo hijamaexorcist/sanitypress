@@ -22,7 +22,6 @@ export default async function RootLayout({
 		<Root>
 			{/* <GoogleTagManager gtmId="" /> */}
 			<body className="bg-canvas text-ink antialiased">
-				{/* ✅ Load reCAPTCHA V3 globally - only if site key exists */}
 				{recaptchaSiteKey && (
 					<Script
 						src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
@@ -37,8 +36,10 @@ export default async function RootLayout({
 						{children}
 					</main>
 					<Footer />
+
 					<VisualEditingControls />
 				</NuqsAdapter>
+
 				<Analytics />
 				<SpeedInsights />
 			</body>

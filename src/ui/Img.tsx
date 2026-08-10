@@ -16,9 +16,8 @@ export function Img({
 	if (!image?.asset) return null
 
 	const { src, width, height } = generateSrc(image, w, h)
-const rawLoading = stegaClean(image.loading)
-const loading: 'lazy' | 'eager' | undefined =
-  rawLoading === 'lazy' || rawLoading === 'eager' ? rawLoading : undefined
+
+	const loading = stegaClean(image.loading)
 
 	return (
 		<NextImage

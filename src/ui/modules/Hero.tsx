@@ -14,7 +14,6 @@ export default function Hero({
 	assets,
 	textAlign: ta = 'center',
 	alignItems: ai,
-	bgImage,
 	...props
 }: Partial<{
 	pretitle: string
@@ -23,8 +22,6 @@ export default function Hero({
 	assets: Sanity.Img[]
 	textAlign: React.CSSProperties['textAlign']
 	alignItems: React.CSSProperties['alignItems']
-	bgImage?: string
-	size: 'sm' | 'md' | 'lg'
 }> &
 	Sanity.Module) {
 	const hasImage = !!assets?.[0]
@@ -40,7 +37,7 @@ export default function Hero({
 					'bg-ink text-canvas grid overflow-hidden *:col-span-full *:row-span-full',
 			)}
 			{...moduleProps(props)}
->
+		>
 			{hasImage && (
 				<ResponsiveImg
 					img={asset}
@@ -98,7 +95,6 @@ export default function Hero({
 
 						<CTAList
 							ctas={ctas}
-							ctaClassName="hero-cta"
 							className={cn('!mt-4', {
 								'justify-start': textAlign === 'left',
 								'justify-center': textAlign === 'center',

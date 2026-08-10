@@ -1,3 +1,10 @@
-import sanityStudio from '@sanity/eslint-config-studio'
+import sanityStudioModule from '@sanity/eslint-config-studio'
 
-export default sanityStudio
+const sanityStudio = sanityStudioModule.default ?? sanityStudioModule
+
+export default [
+	{
+		ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'],
+	},
+	...sanityStudio,
+]

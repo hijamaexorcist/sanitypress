@@ -48,7 +48,7 @@ export default function HeroSplit({
 						},
 					}}
 				/>
-				<CTAList ctas={ctas} className="!mt-6" ctaClassName="hero-cta" />
+				<CTAList ctas={ctas} className="!mt-6" />
 			</div>
 		</section>
 	)

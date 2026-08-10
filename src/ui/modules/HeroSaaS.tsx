@@ -50,11 +50,7 @@ export default function HeroSaaS({
 						},
 					}}
 				/>
-				<CTAList
-					ctas={ctas}
-					className="!mt-8 justify-center"
-					ctaClassName="hero-cta"
-				/>
+				<CTAList ctas={ctas} className="!mt-8 justify-center" />
 			</div>
 
 			{(() => {
