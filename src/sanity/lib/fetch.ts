@@ -52,6 +52,12 @@ export const { sanityFetch, SanityLive } = defineLive({
 export async function fetchSanityLive<T = any>(
 	args: Parameters<typeof sanityFetch>[0],
 ) {
+	if (dev)
+		return fetchSanity<T>({
+			query: args.query,
+			params: args.params,
+		})
+
 	const preview = dev || (await draftMode()).isEnabled
 
 	const { data } = await sanityFetch({
