@@ -327,6 +327,31 @@
 	@apply bg-clinic-sage/55 rounded-2xl p-5 text-sm leading-relaxed;
 }
 
+.clinic-hero-atmosphere {
+	position: absolute;
+	inset: -20%;
+	background:
+		radial-gradient(circle at 72% 38%, rgb(185 110 82 / 0.14), transparent 22rem),
+		radial-gradient(circle at 20% 78%, rgb(53 89 67 / 0.12), transparent 28rem);
+	animation: clinic-atmosphere 20s cubic-bezier(0.32, 0.72, 0, 1) infinite alternate;
+	pointer-events: none;
+}
+
+@keyframes clinic-atmosphere {
+	from {
+		transform: translate3d(-1%, -1%, 0) scale(1);
+	}
+	to {
+		transform: translate3d(1%, 1%, 0) scale(1.03);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.clinic-hero-atmosphere {
+		animation: none;
+	}
+}
+
 /* richtext */
 
 @utility richtext {
