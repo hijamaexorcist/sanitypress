@@ -201,6 +201,44 @@
 	@apply underline hover:decoration-2;
 }
 
+.hero-cta {
+	min-height: 3rem;
+	border-radius: 999px;
+	padding-inline: 1.25rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	transition:
+		background-color var(--default-transition-duration),
+		border-color var(--default-transition-duration),
+		box-shadow var(--default-transition-duration),
+		color var(--default-transition-duration),
+		transform var(--default-transition-duration);
+
+	&:is(:hover, :focus-visible) {
+		transform: translateY(-1px);
+	}
+
+	&.action {
+		border-color: var(--color-ink);
+		background-color: var(--color-ink);
+		color: var(--color-canvas);
+		box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.14);
+	}
+
+	&.action-outline,
+	&.ghost {
+		border-color: color-mix(in oklab, currentColor 24%, transparent);
+		background-color: color-mix(in oklab, var(--color-canvas) 88%, transparent);
+		box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
+	}
+
+	&.link {
+		padding-inline: 0;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.35em;
+	}
+}
+
 @utility input {
 	@apply border-ink/10 rounded border p-[.25em] text-start;
 }

@@ -98,6 +98,7 @@ export default function Hero({
 
 						<CTAList
 							ctas={ctas}
+							ctaClassName="hero-cta"
 							className={cn('!mt-4', {
 								'justify-start': textAlign === 'left',
 								'justify-center': textAlign === 'center',
