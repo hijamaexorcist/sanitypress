@@ -66,6 +66,7 @@
 		caret-color: var(--color-accent);
 		scroll-behavior: smooth;
 		background: var(--color-canvas);
+		overflow-x: clip;
 	}
 
 	body {
@@ -73,6 +74,7 @@
 		text-wrap: pretty;
 		color: var(--color-ink);
 		background: var(--color-canvas);
+		overflow-x: clip;
 	}
 
 	::selection {
