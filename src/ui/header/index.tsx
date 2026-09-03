@@ -18,7 +18,7 @@ export default async function Header() {
 			<div
 				className={cn(
 					css.header,
-					'bg-canvas/92 ring-ink/8 mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 backdrop-blur-lg md:px-7',
+					'bg-canvas/92 ring-ink/8 mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 backdrop-blur-lg transition-[border-radius,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] max-md:header-open:rounded-[2rem] max-md:header-open:shadow-[0_24px_60px_rgb(24_53_43_/_0.16)] md:px-7',
 				)}
 			>
 				<div className="[grid-area:logo]">

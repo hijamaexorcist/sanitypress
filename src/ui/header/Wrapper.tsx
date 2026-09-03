@@ -30,7 +30,7 @@ export default function Wrapper({
 	// close menus after navigation
 	useEffect(() => {
 		if (typeof document === 'undefined') return
-		const toggle = document.querySelector('#header-open') as HTMLInputElement
+		const toggle = document.querySelector('#header-toggle') as HTMLInputElement
 		if (toggle) toggle.checked = false
 
 		if (!ref.current) return
