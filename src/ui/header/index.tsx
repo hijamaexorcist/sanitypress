@@ -24,19 +24,26 @@ export default async function Header() {
 				<div className="[grid-area:logo]">
 					<Link
 						className={cn(
-							'inline-flex min-h-11 min-w-11 items-center font-serif text-2xl tracking-[-0.04em] md:text-3xl',
+							'inline-flex min-h-11 min-w-0 items-center gap-3 font-serif tracking-[-0.04em]',
 							logo?.image && 'max-w-3xs',
 						)}
 						href="/"
 					>
 						{logoImage ? (
-							<Img
-								className="inline-block max-h-[1.2em] w-auto"
-								image={logoImage}
-								alt={logo?.name || title}
-							/>
+							<>
+								<Img
+									className="inline-block max-h-8 w-auto shrink-0"
+									image={logoImage}
+									alt=""
+								/>
+								<span className="truncate text-lg leading-none font-semibold text-ink md:text-xl">
+									{title || logo?.name}
+								</span>
+							</>
 						) : (
-							<span>{title}</span>
+							<span className="text-xl leading-none font-semibold md:text-2xl">
+								{title}
+							</span>
 						)}
 					</Link>
 				</div>
