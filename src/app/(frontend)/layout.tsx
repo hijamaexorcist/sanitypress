@@ -1,10 +1,11 @@
-// import { GoogleTagManager } from '@next/third-parties/google'
 import Root from '@/ui/Root'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import SkipToContent from '@/ui/SkipToContent'
 import Announcement from '@/ui/Announcement'
 import Header from '@/ui/header'
 import Footer from '@/ui/footer'
+import WhatsAppFloat from '@/ui/WhatsAppFloat'
+import ClinicJsonLd from '@/ui/ClinicJsonLd'
 import VisualEditingControls from '@/ui/VisualEditingControls'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -21,13 +22,14 @@ export default async function RootLayout({
 	return (
 		<Root>
 			{/* <GoogleTagManager gtmId="" /> */}
-			<body className="bg-canvas text-ink antialiased">
+			<body className="bg-canvas text-ink antialiased" suppressHydrationWarning>
 				{recaptchaSiteKey && (
 					<Script
 						src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
 						strategy="afterInteractive"
 					/>
 				)}
+				<ClinicJsonLd />
 				<NuqsAdapter>
 					<SkipToContent />
 					<Announcement />
@@ -36,6 +38,7 @@ export default async function RootLayout({
 						{children}
 					</main>
 					<Footer />
+					<WhatsAppFloat />
 
 					<VisualEditingControls />
 				</NuqsAdapter>

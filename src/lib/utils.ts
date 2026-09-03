@@ -59,3 +59,21 @@ export function getBlockText(
 		}, '') || ''
 	)
 }
+
+/** Build a WhatsApp click-to-chat URL with an optional prefilled message. */
+export function waLink(phone: string, message?: string) {
+	const sanitized = phone.replace(/\D/g, '')
+	if (!sanitized) return undefined
+
+	const base = `https://wa.me/${sanitized}`
+	return message ? `${base}?text=${encodeURIComponent(message)}` : base
+}
+
+/** Pull a WhatsApp number from a wa.me / WhatsApp URL when present. */
+export function parseWhatsAppNumber(url?: string) {
+	if (!url) return undefined
+	const match = url.match(
+		/(?:wa\.me\/|whatsapp\.com\/send\?phone=|api\.whatsapp\.com\/send\?phone=)(\d+)/i,
+	)
+	return match?.[1]
+}

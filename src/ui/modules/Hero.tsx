@@ -3,6 +3,7 @@ import { ResponsiveImg } from '@/ui/Img'
 import { PortableText, stegaClean } from 'next-sanity'
 import CTAList from '@/ui/CTAList'
 import Pretitle from '@/ui/Pretitle'
+import { Reveal } from '@/ui/motion/Reveal'
 import CustomHTML from './CustomHTML'
 import Reputation from '@/ui/Reputation'
 import { cn } from '@/lib/utils'
@@ -33,7 +34,10 @@ export default function Hero({
 	return (
 		<section
 			className={cn(
-				'section grid min-h-[min(760px,calc(100dvh-var(--header-height)))] items-center gap-10 md:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.8fr)] md:gap-16',
+				'section grid items-center gap-10',
+				hasImage
+					? 'min-h-[min(760px,calc(100dvh-var(--header-height)))] md:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.8fr)] md:gap-16'
+					: 'py-12 md:py-16',
 			)}
 			{...moduleProps(props)}
 		>
@@ -50,58 +54,60 @@ export default function Hero({
 
 			{content && (
 				<div className="flex w-full flex-col text-balance">
-					<div
-						className={cn(
-							'richtext headings:text-balance relative isolate max-w-2xl',
-							{
-								'mb-8': alignItems === 'start',
-								'my-auto': alignItems === 'center',
-								'mt-auto': alignItems === 'end',
-								'me-auto': ['left', 'start'].includes(textAlign),
-								'mx-auto': textAlign === 'center',
-								'ms-auto': ['right', 'end'].includes(textAlign),
-							},
-						)}
-						style={{ textAlign }}
-					>
-						<Pretitle className="clinic-kicker">
-							{pretitle}
-						</Pretitle>
-
-						<PortableText
-							value={content}
-							components={{
-								types: {
-									'custom-html': ({ value }) => <CustomHTML {...value} />,
-									'reputation-block': ({ value }) => (
-										<Reputation
-											className={cn(
-												'!mt-4',
-												hasImage && '[&_strong]:text-amber-400',
-												{
-													'justify-start': ['left', 'start'].includes(
-														textAlign,
-													),
-													'justify-center': textAlign === 'center',
-													'justify-end': ['right', 'end'].includes(textAlign),
-												},
-											)}
-											reputation={value.reputation}
-										/>
-									),
+					<Reveal immediate className="w-full">
+						<div
+							className={cn(
+								'richtext headings:text-balance relative isolate max-w-2xl',
+								{
+									'mb-8': alignItems === 'start',
+									'my-auto': alignItems === 'center',
+									'mt-auto': alignItems === 'end',
+									'me-auto': ['left', 'start'].includes(textAlign),
+									'mx-auto': textAlign === 'center',
+									'ms-auto': ['right', 'end'].includes(textAlign),
 								},
-							}}
-						/>
+							)}
+							style={{ textAlign }}
+						>
+							<Pretitle className="clinic-kicker">
+								{pretitle}
+							</Pretitle>
 
-						<CTAList
-							ctas={ctas}
-							className={cn('!mt-4', {
-								'justify-start': textAlign === 'left',
-								'justify-center': textAlign === 'center',
-								'justify-end': textAlign === 'right',
-							})}
-						/>
-					</div>
+							<PortableText
+								value={content}
+								components={{
+									types: {
+										'custom-html': ({ value }) => <CustomHTML {...value} />,
+										'reputation-block': ({ value }) => (
+											<Reputation
+												className={cn(
+													'!mt-4',
+													hasImage && '[&_strong]:text-amber-400',
+													{
+														'justify-start': ['left', 'start'].includes(
+															textAlign,
+														),
+														'justify-center': textAlign === 'center',
+														'justify-end': ['right', 'end'].includes(textAlign),
+													},
+												)}
+												reputation={value.reputation}
+											/>
+										),
+									},
+								}}
+							/>
+
+							<CTAList
+								ctas={ctas}
+								className={cn('!mt-4', {
+									'justify-start': textAlign === 'left',
+									'justify-center': textAlign === 'center',
+									'justify-end': textAlign === 'right',
+								})}
+							/>
+						</div>
+					</Reveal>
 				</div>
 			)}
 		</section>

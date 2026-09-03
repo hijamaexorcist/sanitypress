@@ -17,12 +17,16 @@ export default function LinkList({
 		>
 			<summary
 				className={cn(summaryClassName, 'flex h-full items-center gap-1')}
+				key="summary"
 			>
 				{link?.label}
 				<CgChevronRight className="shrink-0 transition-transform group-open:rotate-90 md:rotate-90" />
 			</summary>
 
-			<ul className="anim-fade-to-b md:frosted-glass md:bg-canvas border-ink/10 top-full left-0 px-3 py-2 max-md:border-s md:absolute md:min-w-max md:rounded md:border md:shadow-md">
+			<ul
+				className="anim-fade-to-b md:frosted-glass md:bg-canvas border-ink/10 top-full left-0 px-3 py-2 max-md:border-s md:absolute md:min-w-max md:rounded md:border md:shadow-md"
+				key="links"
+			>
 				{links?.map((link, key) => (
 					<li key={key}>
 						<CTA className="hover:link inline-block py-px" link={link} />

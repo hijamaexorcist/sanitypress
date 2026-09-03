@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "instrument sans",
+        "createdAt": "2026-08-14T06:04:03.468Z",
+        "reason": "Existing clinic design system typeface; unrelated to reduced-motion CSS fix"
+      }
+    ]
+  }
+}

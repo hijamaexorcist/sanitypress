@@ -1,6 +1,7 @@
 import moduleProps from '@/lib/moduleProps'
 import Pretitle from '@/ui/Pretitle'
 import { PortableText } from 'next-sanity'
+import { Reveal } from '@/ui/motion/Reveal'
 import Image from './RichtextModule/Image'
 import Code from './RichtextModule/Code'
 import CustomHTML from './CustomHTML'
@@ -39,20 +40,22 @@ export default function AccordionList({
 			})}
 			{...moduleProps(props)}
 		>
-			<header
-				className={cn(
-					'richtext',
-					layout === 'horizontal'
-						? 'md:sticky-below-header self-start [--offset:1rem]'
-						: 'text-center',
-				)}
-			>
-				<Pretitle>{pretitle}</Pretitle>
-				<PortableText value={intro} />
-			</header>
+			<Reveal>
+				<header
+					className={cn(
+						'richtext',
+						layout === 'horizontal'
+							? 'md:sticky-below-header self-start [--offset:1rem]'
+							: 'text-center',
+					)}
+				>
+					<Pretitle>{pretitle}</Pretitle>
+					<PortableText value={intro} />
+				</header>
+			</Reveal>
 
 			<div className="mx-auto w-full max-w-screen-md">
-				{items?.map(({ summary, content, open }, key) => (
+				{items?.map(({ summary, content, open }, index) => (
 					<details
 						className="accordion border-ink/10 border-b"
 						name={connect ? props._key : undefined}
@@ -62,7 +65,7 @@ export default function AccordionList({
 							itemProp: 'mainEntity',
 							itemType: 'https://schema.org/Question',
 						})}
-						key={key}
+						key={summary || index}
 					>
 						<summary
 							className="py-4 font-bold"

@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState, type ComponentProps } from 'react'
-import { isMobile } from 'react-device-detect'
+import { useEffect, useRef, useState, type ComponentProps } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import css from './InteractiveDetails.module.css'
@@ -15,6 +14,7 @@ export default function InteractiveDetails({
 	closeAfterNavigate,
 	delay,
 	className,
+	children,
 	...props
 }: {
 	safeAreaOnHover?: boolean
@@ -22,37 +22,51 @@ export default function InteractiveDetails({
 	delay?: number
 } & ComponentProps<'details'>) {
 	const [open, setOpen] = useState(false)
-	let timeout: NodeJS.Timeout
-
-	const events = !isMobile
-		? {
-				onMouseEnter: () => {
-					if (delay) {
-						timeout = setTimeout(() => setOpen(true), delay)
-					} else {
-						setOpen(true)
-					}
-				},
-				onMouseLeave: () => {
-					if (delay) clearTimeout(timeout)
-					setOpen(false)
-				},
-			}
-		: {}
-
-	// Close after navigation
+	const [hoverEnabled, setHoverEnabled] = useState(false)
+	const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 	const pathname = usePathname()
+
+	useEffect(() => {
+		setHoverEnabled(window.matchMedia('(hover: hover)').matches)
+	}, [])
+
 	useEffect(() => {
 		if (closeAfterNavigate) setOpen(false)
-	}, [pathname])
+	}, [closeAfterNavigate, pathname])
+
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) clearTimeout(timeoutRef.current)
+		}
+	}, [])
 
 	return (
 		<details
+			{...props}
 			className={cn(safeAreaOnHover && css.safearea, className)}
 			open={open}
-			key={String(open)}
-			{...events}
-			{...props}
-		/>
+			onToggle={(event) => setOpen(event.currentTarget.open)}
+			onMouseEnter={
+				hoverEnabled
+					? () => {
+							if (delay) {
+								timeoutRef.current = setTimeout(() => setOpen(true), delay)
+							} else {
+								setOpen(true)
+							}
+						}
+					: undefined
+			}
+			onMouseLeave={
+				hoverEnabled
+					? () => {
+							if (timeoutRef.current) clearTimeout(timeoutRef.current)
+							setOpen(false)
+						}
+					: undefined
+			}
+		>
+			{children}
+		</details>
 	)
 }

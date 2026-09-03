@@ -1,9 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import moment from 'moment-hijri'
 import moduleProps from '@/lib/moduleProps'
 import { getRecaptchaToken } from '@/lib/recaptcha'
+import {
+	getHijriDate,
+	getSunnahDaysForMonth,
+	isSunnahDay,
+} from '@/lib/hijri'
 
 interface AppointmentFormModuleProps {
 	title?: string
@@ -30,43 +34,6 @@ interface AppointmentFormModuleProps {
 }
 
 type BookingStatus = 'idle' | 'submitting' | 'success' | 'error'
-
-function getHijriDate(gregorianDate: Date) {
-	const date = moment(gregorianDate)
-	const months = [
-		'Muharram',
-		'Safar',
-		'Rabi al-Awwal',
-		'Rabi al-Thani',
-		'Jumada al-Awwal',
-		'Jumada al-Thani',
-		'Rajab',
-		'Shaban',
-		'Ramadan',
-		'Shawwal',
-		'Dhul Qadah',
-		'Dhul Hijjah',
-	]
-
-	return { day: date.iDate(), month: months[date.iMonth()], year: date.iYear() }
-}
-
-function isSunnahDay(date: Date) {
-	return [13, 14, 15, 17, 19, 21].includes(moment(date).iDate())
-}
-
-function getSunnahDaysForMonth(year: number, month: number) {
-	const days: Date[] = []
-	const current = new Date(year, month, 1)
-	const lastDay = new Date(year, month + 1, 0)
-
-	while (current <= lastDay) {
-		if (isSunnahDay(current)) days.push(new Date(current))
-		current.setDate(current.getDate() + 1)
-	}
-
-	return days
-}
 
 function asLocalDate(value: string) {
 	return new Date(`${value}T12:00:00`)

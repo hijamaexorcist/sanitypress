@@ -7,6 +7,7 @@ export default defineType({
 	groups: [
 		{ name: 'branding', default: true },
 		{ name: 'info' },
+		{ name: 'contact' },
 		{ name: 'navigation' },
 	],
 	fields: [
@@ -45,6 +46,57 @@ export default defineType({
 				},
 			],
 			group: 'info',
+		}),
+		defineField({
+			name: 'contact',
+			title: 'Clinic contact',
+			type: 'object',
+			group: 'contact',
+			options: { columns: 2 },
+			fields: [
+				defineField({
+					name: 'phone',
+					description: 'E.164 preferred, e.g. +15551234567',
+					type: 'string',
+				}),
+				defineField({
+					name: 'whatsapp',
+					title: 'WhatsApp number',
+					description: 'Digits only, country code included (e.g. 15551234567)',
+					type: 'string',
+				}),
+				defineField({
+					name: 'whatsappMessage',
+					title: 'WhatsApp prefilled message',
+					type: 'text',
+					rows: 2,
+				}),
+				defineField({
+					name: 'email',
+					type: 'email',
+				}),
+				defineField({
+					name: 'city',
+					type: 'string',
+				}),
+				defineField({
+					name: 'serviceArea',
+					description: 'e.g. Home visits across Brooklyn',
+					type: 'string',
+				}),
+				defineField({
+					name: 'countryCode',
+					description: 'ISO country code for structured data (e.g. US, SA, GB)',
+					type: 'string',
+					initialValue: 'US',
+				}),
+				defineField({
+					name: 'seoDescription',
+					title: 'Business description (JSON-LD)',
+					type: 'text',
+					rows: 3,
+				}),
+			],
 		}),
 		defineField({
 			name: 'ctas',

@@ -14,6 +14,16 @@ declare global {
 			announcements?: Announcement[]
 			copyright?: any
 			ogimage?: string
+			contact?: {
+				phone?: string
+				whatsapp?: string
+				whatsappMessage?: string
+				email?: string
+				city?: string
+				serviceArea?: string
+				countryCode?: string
+				seoDescription?: string
+			}
 			// navigation
 			ctas?: CTA[]
 			headerMenu?: Navigation

@@ -2,6 +2,7 @@ import moduleProps from '@/lib/moduleProps'
 import Pretitle from '@/ui/Pretitle'
 import CTA from '@/ui/CTA'
 import { PortableText } from 'next-sanity'
+import { Reveal, Stagger, RevealItem } from '@/ui/motion/Reveal'
 import Code from './RichtextModule/Code'
 import CustomHTML from './CustomHTML'
 import Reputation from '@/ui/Reputation'
@@ -41,7 +42,7 @@ export default function HeroSaaS({
 		>
 			<div aria-hidden="true" className="clinic-hero-atmosphere" />
 			<div className="section relative grid min-h-[min(760px,calc(100dvh-var(--header-height)))] items-center gap-12 py-16 md:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.75fr)] md:py-24">
-				<div className="richtext max-w-2xl text-balance">
+				<Reveal immediate className="richtext max-w-2xl text-balance">
 					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText
 						value={content}
@@ -82,7 +83,7 @@ export default function HeroSaaS({
 					>
 						First time? See what to expect
 					</a>
-				</div>
+				</Reveal>
 
 				<div className="relative">
 					{asset?._type === 'img' ? (
@@ -100,28 +101,36 @@ export default function HeroSaaS({
 							/>
 						</div>
 					) : (
-						<div className="clinic-shell p-1.5">
+						<Reveal immediate delay={0.18} className="clinic-shell p-1.5">
 							<div className="clinic-core p-7 md:p-10">
 								<p className="clinic-kicker">Your first visit</p>
 								<h2 className="h3 mt-5">
 									A considered appointment, from the first question.
 								</h2>
-								<ol className="mt-8 space-y-5">
+								<Stagger
+									immediate
+									delay={0.28}
+									stagger={0.1}
+									className="mt-8 space-y-5"
+								>
 									{[
 										'Tell us what you need',
 										'Choose a time that works',
 										'Receive clear confirmation details',
 									].map((step, index) => (
-										<li className="grid grid-cols-[auto_1fr] items-center gap-4" key={step}>
+										<RevealItem
+											className="grid grid-cols-[auto_1fr] items-center gap-4"
+											key={step}
+										>
 											<span className="grid size-9 place-items-center rounded-full bg-clinic-sage text-sm font-semibold">
 												{index + 1}
 											</span>
 											<span className="text-sm font-semibold text-ink/75">{step}</span>
-										</li>
+										</RevealItem>
 									))}
-								</ol>
+								</Stagger>
 							</div>
-						</div>
+						</Reveal>
 					)}
 				</div>
 			</div>

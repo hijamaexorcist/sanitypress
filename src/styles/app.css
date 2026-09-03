@@ -350,6 +350,12 @@
 	.clinic-hero-atmosphere {
 		animation: none;
 	}
+
+	:where(.anim-fade, .anim-fade-to-l, .anim-fade-to-r, .anim-fade-to-t, .anim-fade-to-b) {
+		animation: none !important;
+		opacity: 1 !important;
+		translate: none !important;
+	}
 }
 
 /* richtext */

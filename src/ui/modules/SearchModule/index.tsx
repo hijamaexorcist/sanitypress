@@ -5,6 +5,7 @@ import SearchForm from './SearchForm'
 import type { SearchScope } from './store'
 import CTAList from '@/ui/CTAList'
 import moduleProps from '@/lib/moduleProps'
+import { cn } from '@/lib/utils'
 
 export default function SearchModule({
 	pretitle,
@@ -20,8 +21,13 @@ export default function SearchModule({
 	scope: SearchScope
 	path: string
 }>) {
+	const hasHeader = Boolean(pretitle || intro || ctas?.length)
+
 	return (
-		<section className="section space-y-8" {...moduleProps(props)}>
+		<section
+			className={cn('section', hasHeader ? 'space-y-8' : 'py-6 md:py-8')}
+			{...moduleProps(props)}
+		>
 			{(pretitle || intro) && (
 				<header className="richtext text-center">
 					<Pretitle>{pretitle}</Pretitle>

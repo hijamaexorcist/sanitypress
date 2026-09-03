@@ -8,6 +8,7 @@ import {
 	FaInstagram,
 	FaLinkedinIn,
 	FaTiktok,
+	FaWhatsapp,
 	FaXTwitter,
 	FaYoutube,
 } from 'react-icons/fa6'
@@ -62,6 +63,8 @@ function Icon({
 		<FaTiktok {...props} />
 	) : url?.includes('twitter.com') || url?.includes('x.com') ? (
 		<FaXTwitter {...props} />
+	) : url?.includes('wa.me') || url?.includes('whatsapp.com') ? (
+		<FaWhatsapp {...props} />
 	) : url?.includes('youtube.com') ? (
 		<FaYoutube {...props} />
 	) : (
