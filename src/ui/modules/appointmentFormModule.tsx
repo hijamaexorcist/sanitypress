@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import moduleProps from '@/lib/moduleProps'
 import { getRecaptchaToken } from '@/lib/recaptcha'
-import { getHijriDate, getSunnahDaysForMonth, isSunnahDay } from '@/lib/hijri'
+import { getHijriDate, isSunnahDay } from '@/lib/hijri'
 
 interface AppointmentFormModuleProps {
 	title?: string
@@ -80,13 +80,6 @@ export default function AppointmentFormModule({
 	const [confirmationSent, setConfirmationSent] = useState<boolean | null>(null)
 	const [errorMessage, setErrorMessage] = useState('')
 	const [showPreparation, setShowPreparation] = useState(false)
-	const [sunnahDays, setSunnahDays] = useState<Date[]>([])
-
-	useEffect(() => {
-		const date = new Date()
-		setSunnahDays(getSunnahDaysForMonth(date.getFullYear(), date.getMonth()))
-	}, [])
-
 	const selectedDate = formData.date ? asLocalDate(formData.date) : undefined
 	const hijriDate = selectedDate ? getHijriDate(selectedDate) : undefined
 	const selectedDayIsSunnah = selectedDate ? isSunnahDay(selectedDate) : false
@@ -469,30 +462,14 @@ export default function AppointmentFormModule({
 				</div>
 
 				<aside className="space-y-5 lg:sticky lg:top-28">
-					<div className="clinic-shell">
-						<div className="clinic-core p-6 md:p-7">
-							<p className="clinic-kicker">A considered practice</p>
-							<h2 className="h3 mt-4">Sunnah day guidance</h2>
-							<p className="text-ink/70 mt-4 text-sm leading-relaxed">
-								Hijama is commonly observed on the 13th, 14th, 15th, 17th, 19th,
-								and 21st of the lunar month. This is supportive guidance, not a
-								requirement for your treatment.
-							</p>
-							{sunnahDays.length > 0 && (
-								<ul className="mt-5 space-y-2 text-sm font-medium">
-									{sunnahDays.map((day) => (
-										<li key={day.toISOString()}>
-											{day.toLocaleDateString('en-US', {
-												weekday: 'long',
-												month: 'short',
-												day: 'numeric',
-											})}
-										</li>
-									))}
-								</ul>
-							)}
-						</div>
-					</div>
+					<SunnahCalendar
+						maxDate={maxDate}
+						minDate={minDate}
+						onSelect={(date) =>
+							setFormData((current) => ({ ...current, date }))
+						}
+						selectedValue={formData.date}
+					/>
 
 					{locationInfo && (
 						<div className="clinic-shell">
@@ -596,6 +573,199 @@ export default function AppointmentFormModule({
 				</aside>
 			</div>
 		</section>
+	)
+}
+
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+function toDateInputValue(date: Date) {
+	const year = date.getFullYear()
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const day = String(date.getDate()).padStart(2, '0')
+	return `${year}-${month}-${day}`
+}
+
+function SunnahCalendar({
+	minDate,
+	maxDate,
+	selectedValue,
+	onSelect,
+}: {
+	minDate: string
+	maxDate: string
+	selectedValue: string
+	onSelect: (date: string) => void
+}) {
+	const firstAvailable = asLocalDate(minDate)
+	const lastAvailable = asLocalDate(maxDate)
+	const firstMonth = new Date(
+		firstAvailable.getFullYear(),
+		firstAvailable.getMonth(),
+		1,
+	)
+	const lastMonth = new Date(
+		lastAvailable.getFullYear(),
+		lastAvailable.getMonth(),
+		1,
+	)
+	const [visibleMonth, setVisibleMonth] = useState(firstMonth)
+	const year = visibleMonth.getFullYear()
+	const month = visibleMonth.getMonth()
+	const leadingDays = new Date(year, month, 1).getDay()
+	const daysInMonth = new Date(year, month + 1, 0).getDate()
+	const calendarDays = [
+		...Array.from<null>({ length: leadingDays }).fill(null),
+		...Array.from({ length: daysInMonth }, (_, index) =>
+			new Date(year, month, index + 1),
+		),
+	]
+	const monthStartHijri = getHijriDate(new Date(year, month, 1))
+	const monthEndHijri = getHijriDate(new Date(year, month + 1, 0))
+	const hijriRange =
+		monthStartHijri.month === monthEndHijri.month
+			? `${monthStartHijri.month} ${monthEndHijri.year} AH`
+			: `${monthStartHijri.month} – ${monthEndHijri.month} ${monthEndHijri.year} AH`
+	const canGoBack = visibleMonth > firstMonth
+	const canGoForward = visibleMonth < lastMonth
+
+	function changeMonth(offset: number) {
+		setVisibleMonth(new Date(year, month + offset, 1))
+	}
+
+	return (
+		<div className="clinic-shell overflow-hidden">
+			<div className="clinic-core relative overflow-hidden p-5 md:p-6">
+				<div
+					aria-hidden="true"
+					className="pointer-events-none absolute -top-20 -right-16 size-52 rounded-full bg-clinic-sage/55 blur-3xl"
+				/>
+
+				<div className="relative">
+					<div className="flex items-start justify-between gap-4">
+						<div>
+							<p className="clinic-kicker">Plan around the lunar month</p>
+							<h2 className="mt-3 font-serif text-3xl leading-none tracking-[-0.035em]">
+								Sunnah days
+							</h2>
+						</div>
+						<span
+							aria-hidden="true"
+							className="grid size-11 shrink-0 place-items-center rounded-full bg-accent text-xl text-canvas shadow-[0_8px_24px_rgb(24_53_43_/_0.2)]"
+						>
+							♥
+						</span>
+					</div>
+
+					<p className="mt-4 text-sm leading-relaxed text-ink/65">
+						Green hearts mark the 13th, 14th, 15th, 17th, 19th and 21st of
+						the lunar month. You may request any available day.
+					</p>
+
+					<div className="mt-6 rounded-[1.5rem] border border-ink/8 bg-canvas/70 p-3 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.8)]">
+						<div className="flex items-center justify-between gap-3 px-1 pb-4">
+							<button
+								aria-label="Show previous month"
+								className="grid size-9 place-items-center rounded-full text-lg text-ink/65 transition hover:bg-clinic-sage/60 disabled:cursor-not-allowed disabled:opacity-25"
+								disabled={!canGoBack}
+								onClick={() => changeMonth(-1)}
+								type="button"
+							>
+								<span aria-hidden="true">←</span>
+							</button>
+							<div className="text-center">
+								<p className="font-serif text-lg font-semibold">
+									{visibleMonth.toLocaleDateString('en-US', {
+										month: 'long',
+										year: 'numeric',
+									})}
+								</p>
+								<p className="mt-0.5 text-[0.65rem] font-semibold tracking-wide text-ink/45 uppercase">
+									{hijriRange}
+								</p>
+							</div>
+							<button
+								aria-label="Show next month"
+								className="grid size-9 place-items-center rounded-full text-lg text-ink/65 transition hover:bg-clinic-sage/60 disabled:cursor-not-allowed disabled:opacity-25"
+								disabled={!canGoForward}
+								onClick={() => changeMonth(1)}
+								type="button"
+							>
+								<span aria-hidden="true">→</span>
+							</button>
+						</div>
+
+						<div className="grid grid-cols-7 text-center text-[0.62rem] font-bold tracking-wider text-ink/40 uppercase">
+							{WEEKDAYS.map((weekday) => (
+								<span className="py-2" key={weekday}>
+									{weekday.slice(0, 1)}
+								</span>
+							))}
+						</div>
+
+						<div
+							aria-label={`${visibleMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} appointment calendar`}
+							className="grid grid-cols-7 gap-1"
+							role="group"
+						>
+							{calendarDays.map((date, index) => {
+								if (!date)
+									return <span aria-hidden="true" key={`empty-${index}`} />
+
+								const value = toDateInputValue(date)
+								const available = date >= firstAvailable && date <= lastAvailable
+								const sunnahDay = isSunnahDay(date)
+								const selected = selectedValue === value
+								const hijri = getHijriDate(date)
+
+								return (
+									<button
+										aria-label={`${date.toLocaleDateString('en-US', {
+											weekday: 'long',
+											month: 'long',
+											day: 'numeric',
+										})}, ${hijri.day} ${hijri.month}${sunnahDay ? ', Sunnah day' : ''}`}
+										aria-pressed={selected}
+										className={`relative grid aspect-square place-items-center rounded-xl text-xs font-semibold transition ${
+											selected
+												? 'bg-accent text-canvas shadow-[0_6px_14px_rgb(24_53_43_/_0.2)]'
+												: sunnahDay && available
+													? 'bg-clinic-sage/70 text-ink ring-1 ring-accent/15 hover:bg-clinic-sage'
+													: 'text-ink/65 hover:bg-clinic-sage/45'
+										} disabled:cursor-not-allowed disabled:opacity-20`}
+										disabled={!available}
+										key={value}
+										onClick={() => onSelect(value)}
+										type="button"
+									>
+										{sunnahDay && available && (
+											<span
+												aria-hidden="true"
+												className={`absolute top-0.5 right-1 text-[0.48rem] ${selected ? 'text-clinic-sage' : 'text-accent'}`}
+											>
+												♥
+											</span>
+										)}
+										<span>{date.getDate()}</span>
+									</button>
+								)
+							})}
+						</div>
+					</div>
+
+					<div className="mt-4 flex items-center justify-between gap-3 text-xs text-ink/55">
+						<span className="inline-flex items-center gap-2">
+							<span aria-hidden="true" className="text-accent">
+								♥
+							</span>
+							Commonly observed Sunnah date
+						</span>
+						{selectedValue && (
+							<span className="font-semibold text-accent">Selected</span>
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }
 
