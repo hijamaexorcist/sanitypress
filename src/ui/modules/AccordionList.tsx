@@ -19,6 +19,7 @@ export default function AccordionList({
 	pretitle: string
 	intro: any
 	items: {
+		_key?: string
 		summary: string
 		content: any
 		open?: boolean
@@ -55,8 +56,9 @@ export default function AccordionList({
 			</Reveal>
 
 			<div className="mx-auto w-full max-w-screen-md">
-				{items?.map(({ summary, content, open }, index) => (
+				{items?.map(({ _key, summary, content, open }, index) => (
 					<details
+						key={_key ?? `${props._key ?? 'accordion'}-${index}`}
 						className="accordion border-ink/10 border-b"
 						name={connect ? props._key : undefined}
 						open={open}
@@ -65,7 +67,6 @@ export default function AccordionList({
 							itemProp: 'mainEntity',
 							itemType: 'https://schema.org/Question',
 						})}
-						key={summary || index}
 					>
 						<summary
 							className="py-4 font-bold"

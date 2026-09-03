@@ -20,29 +20,36 @@ export default function StatList({
 	const textAlign = stegaClean(ta)
 
 	return (
-		<section className="section space-y-8" style={{ textAlign }}>
+		<section className="section space-y-8 md:space-y-10" style={{ textAlign }}>
 			{(pretitle || intro) && (
-				<header className="richtext text-center">
-					<Pretitle>{pretitle}</Pretitle>
+				<header className="richtext mx-auto max-w-2xl text-center text-balance">
+					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText value={intro} />
 				</header>
 			)}
 
-			<dl className="mx-auto grid items-start justify-center gap-x-12 gap-y-6 max-md:max-w-max sm:grid-cols-2 md:flex">
+			<dl className="clinic-shell grid overflow-hidden p-1.5 sm:grid-cols-2 lg:grid-cols-4">
 				{stats?.map(({ prefix, value, suffix, text }, key) => (
 					<div
-						className="w-full max-w-[250px] space-y-2 max-md:mx-auto"
+						className="clinic-core relative min-h-40 space-y-3 px-5 py-7 text-start after:absolute after:inset-y-6 after:right-0 after:hidden after:w-px after:bg-ink/8 sm:odd:after:block lg:not-last:after:block lg:odd:after:block"
 						key={key}
 					>
-						<dt className="text-xl font-bold">
-							{prefix && <span className="text-accent/50">{prefix}</span>}
+						<span className="font-serif text-sm text-clinic-clay/55">
+							{String(key + 1).padStart(2, '0')}
+						</span>
+						<dt className="flex min-h-12 items-baseline gap-1 font-serif text-4xl leading-none tracking-[-0.035em] text-ink">
+							{prefix && <span className="text-xl text-ink/45">{prefix}</span>}
 
-							<span className="text-gradient text-6xl">{value}</span>
+							<span>{value}</span>
 
-							{suffix && <span className="text-accent/50">{suffix}</span>}
+							{suffix && <span className="text-lg text-ink/45">{suffix}</span>}
 						</dt>
 
-						{text && <dd className="font-bold text-balance">{text}</dd>}
+						{text && (
+							<dd className="max-w-[16rem] text-sm font-semibold text-balance text-ink/58">
+								{text}
+							</dd>
+						)}
 					</div>
 				))}
 			</dl>

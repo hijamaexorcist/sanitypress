@@ -60,6 +60,7 @@ export const MODULES_QUERY = groq`
 			ctas[]{ ${CTA_QUERY} }
 		}
 	},
+	_type == 'care-journey' => { cta{ ${CTA_QUERY} } },
 	_type == 'creative-module' => {
 		modules[]{
 			...,
