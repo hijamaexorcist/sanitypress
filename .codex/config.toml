@@ -1,0 +1,3 @@
+[mcp_servers.resend]
+url = "https://mcp.resend.com/mcp"
+bearer_token_env_var = "HIJAMA_RESEND_API_KEY"
