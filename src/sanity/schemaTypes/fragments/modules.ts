@@ -34,6 +34,9 @@ export default defineField({
 		{ type: 'appointment-form-module' },
 		{ type: 'care-journey' },
 		{ type: 'care-standards' },
+		{ type: 'tradition-guidance' },
+		{ type: 'education-bento' },
+		{ type: 'video-library' },
 	],
 	options: {
 		insertMenu: {
@@ -73,7 +76,13 @@ export default defineField({
 				},
 				{
 					name: 'clinic',
-					of: ['care-journey', 'care-standards'],
+					of: [
+						'care-journey',
+						'care-standards',
+						'tradition-guidance',
+						'education-bento',
+						'video-library',
+					],
 				},
 				{
 					name: 'testimonials',

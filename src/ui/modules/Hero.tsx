@@ -34,21 +34,22 @@ export default function Hero({
 	return (
 		<section
 			className={cn(
-				'section grid items-center gap-10',
+				'section relative isolate grid items-center gap-10 overflow-hidden',
 				hasImage
 					? 'min-h-[min(760px,calc(100dvh-var(--header-height)))] md:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.8fr)] md:gap-16'
 					: 'py-12 md:py-16',
 			)}
 			{...moduleProps(props)}
 		>
+			<div aria-hidden="true" className="clinic-hero-atmosphere -z-10" />
 			{hasImage && (
-				<div className="clinic-shell order-first overflow-hidden md:order-last">
-				<ResponsiveImg
-					img={asset}
-					className="clinic-core aspect-[4/5] size-full object-cover"
-					width={2400}
-					draggable={false}
-				/>
+				<div className="clinic-shell order-first overflow-hidden md:order-last md:rotate-[1.5deg]">
+					<ResponsiveImg
+						img={asset}
+						className="clinic-core aspect-[4/5] size-full object-cover"
+						width={2400}
+						draggable={false}
+					/>
 				</div>
 			)}
 
@@ -69,9 +70,7 @@ export default function Hero({
 							)}
 							style={{ textAlign }}
 						>
-							<Pretitle className="clinic-kicker">
-								{pretitle}
-							</Pretitle>
+							<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 
 							<PortableText
 								value={content}

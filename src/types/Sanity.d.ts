@@ -213,6 +213,40 @@ declare global {
 				uid?: string
 			}
 		}
+
+		interface TraditionGuidance {
+			pretitle?: string
+			title?: string
+			quote?: string
+			reference?: string
+			sourceUrl?: string
+			context?: string
+			quranNote?: string
+			quranUrl?: string
+		}
+		interface EducationBento {
+			pretitle?: string
+			title?: string
+			description?: string
+			image?: Img
+			topics?: Array<{
+				_key: string
+				label?: string
+				title?: string
+				description?: string
+			}>
+		}
+		interface VideoLibrary {
+			pretitle?: string
+			title?: string
+			description?: string
+			videos?: Array<{
+				_key: string
+				title?: string
+				url?: string
+				description?: string
+			}>
+		}
 	}
 }
 

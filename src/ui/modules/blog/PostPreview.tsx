@@ -16,10 +16,10 @@ export default function PostPreview({
 	if (!post && !skeleton) return null
 
 	return (
-		<div className="group relative isolate flex h-full flex-col space-y-2">
-			<figure className="bg-ink/3 relative aspect-video overflow-hidden">
+		<article className="clinic-core group border-ink/8 relative isolate flex h-full flex-col overflow-hidden rounded-[1.75rem] border shadow-[0_18px_45px_rgb(35_51_43_/_0.06)]">
+			<figure className="bg-ink/3 relative aspect-[4/3] overflow-hidden">
 				<Img
-					className="aspect-video w-full object-cover transition-all group-hover:scale-105 group-hover:brightness-110"
+					className="aspect-[4/3] size-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-[1.025]"
 					image={post?.metadata.image}
 					width={700}
 					alt={post?.metadata.title}
@@ -32,39 +32,41 @@ export default function PostPreview({
 				)}
 			</figure>
 
-			<div className={cn('h4', skeleton && 'skeleton-2')}>
-				<Link
-					className="group-hover:underline"
-					href={resolveUrl(post, { base: false })}
-				>
-					<span className="absolute inset-0" />
-					{post?.metadata.title}
-				</Link>
+			<div className="flex grow flex-col p-6">
+				<div className={cn('h4', skeleton && 'skeleton-2')}>
+					<Link
+						className="group-hover:underline"
+						href={resolveUrl(post, { base: false })}
+					>
+						<span className="absolute inset-0" />
+						{post?.metadata.title}
+					</Link>
+				</div>
+
+				<div className="mt-3 grow">
+					<p className="line-clamp-3 text-sm empty:h-[3lh]">
+						{post?.metadata.description}
+					</p>
+				</div>
+
+				{(post?.authors?.length || skeleton) && (
+					<Authors
+						className="flex flex-wrap items-center gap-4 text-sm"
+						authors={post?.authors}
+						skeleton={skeleton}
+					/>
+				)}
+
+				<hr className="mt-5" />
+
+				<div className="empty:skeleton text-ink/60 mt-4 flex flex-wrap gap-x-4 text-xs">
+					<Date value={post?.publishDate} />
+					<Categories
+						className="flex flex-wrap gap-x-2"
+						categories={post?.categories}
+					/>
+				</div>
 			</div>
-
-			<div className="grow">
-				<p className="line-clamp-3 text-sm empty:h-[3lh]">
-					{post?.metadata.description}
-				</p>
-			</div>
-
-			{(post?.authors?.length || skeleton) && (
-				<Authors
-					className="flex flex-wrap items-center gap-4 text-sm"
-					authors={post?.authors}
-					skeleton={skeleton}
-				/>
-			)}
-
-			<hr />
-
-			<div className="empty:skeleton flex flex-wrap gap-x-4 text-sm">
-				<Date value={post?.publishDate} />
-				<Categories
-					className="flex flex-wrap gap-x-2"
-					categories={post?.categories}
-				/>
-			</div>
-		</div>
+		</article>
 	)
 }

@@ -61,17 +61,17 @@ export default async function BlogList({
 	})
 
 	const listClassName = cn(
-		'items-stretch gap-x-8 gap-y-12',
+		'items-stretch gap-5',
 		stegaClean(layout) === 'grid'
-			? 'grid md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'
+			? 'grid md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]'
 			: 'carousel max-xl:full-bleed md:overflow-fade-r pb-4 [--size:320px] max-xl:px-4',
 	)
 
 	return (
-		<section className="section space-y-8" {...moduleProps(props)}>
+		<section className="section space-y-10" {...moduleProps(props)}>
 			{intro && (
-				<header className="richtext">
-					<Pretitle>{pretitle}</Pretitle>
+				<header className="richtext max-w-3xl">
+					<Pretitle className="clinic-kicker">{pretitle}</Pretitle>
 					<PortableText value={intro} />
 				</header>
 			)}

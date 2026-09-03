@@ -24,6 +24,9 @@ import ContactFormModule from './ContactFormModule'
 import AppointmentFormModule from './appointmentFormModule'
 import CareJourney from './CareJourney'
 import CareStandards from './CareStandards'
+import TraditionGuidance from './TraditionGuidance'
+import EducationBento from './EducationBento'
+import VideoLibrary from './VideoLibrary'
 import dynamic from 'next/dynamic'
 import { createDataAttribute } from 'next-sanity'
 
@@ -57,6 +60,9 @@ const MODULE_MAP = {
 	'appointment-form-module': AppointmentFormModule,
 	'care-journey': CareJourney,
 	'care-standards': CareStandards,
+	'tradition-guidance': TraditionGuidance,
+	'education-bento': EducationBento,
+	'video-library': VideoLibrary,
 } as const
 
 export default function Modules({

@@ -99,7 +99,8 @@ export const MODULES_QUERY = groq`
 			_type == 'img' => { ${ASSET_IMG_QUERY} }
 		}
 	},
-	_type == 'logo-list' => { logos[]-> },
+		_type == 'logo-list' => { logos[]-> },
+		_type == 'education-bento' => { image { ${ASSET_IMG_QUERY} } },
 	_type == 'person-list' => { people[]-> },
 	_type == 'pricing-list' => {
 		tiers[]->{
