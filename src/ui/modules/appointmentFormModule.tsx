@@ -101,6 +101,11 @@ export default function AppointmentFormModule({
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
+		if (!formData.date) {
+			setErrorMessage('Choose a preferred date from the calendar.')
+			setStatus('error')
+			return
+		}
 		setStatus('submitting')
 		setErrorMessage('')
 
@@ -304,40 +309,73 @@ export default function AppointmentFormModule({
 
 								{step === 2 && (
 									<>
-										<fieldset className="space-y-5">
-											<legend className="h4 mb-1">Choose your session</legend>
-											<div className="grid gap-4 sm:grid-cols-2">
-												<label className="space-y-2 text-sm font-medium">
-													<span>Treatment</span>
-													<select
-														className="clinic-input"
-														name="service"
-														onChange={handleChange}
-														required
-														value={formData.service}
-													>
-														{serviceTypes.map((service) => (
-															<option key={service.name} value={service.name}>
-																{service.name} · {service.duration} min
-																{service.price ? ` · ${service.price}` : ''}
-															</option>
-														))}
-													</select>
-												</label>
-												<label className="space-y-2 text-sm font-medium">
-													<span>Preferred date</span>
-													<input
-														className="clinic-input"
-														max={maxDate}
-														min={minDate}
-														name="date"
-														onChange={handleChange}
-														required
-														type="date"
-														value={formData.date}
-													/>
-												</label>
+										<fieldset className="space-y-4">
+											<legend className="h4 mb-1">Choose your treatment</legend>
+							<div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+												{serviceTypes.map((service) => {
+													const selected = formData.service === service.name
+
+													return (
+														<label
+															className={`relative flex min-h-36 cursor-pointer flex-col rounded-[1.4rem] border p-5 transition ${
+																selected
+																	? 'border-accent/25 bg-clinic-sage/70 shadow-[0_10px_28px_rgb(24_53_43_/_0.08)]'
+																	: 'border-ink/8 bg-canvas/55 hover:border-accent/15 hover:bg-clinic-sage/35'
+															}`}
+															key={service.name}
+														>
+															<input
+																checked={selected}
+																className="sr-only"
+																name="service"
+																onChange={handleChange}
+																type="radio"
+																value={service.name}
+															/>
+									<span className="pr-7 text-sm leading-snug font-semibold text-balance">
+																{service.name}
+															</span>
+															<span className="mt-2 text-xs font-medium text-ink/50">
+																{service.duration} minutes
+															</span>
+															<span className="mt-auto pt-5 font-serif text-3xl leading-none text-ink">
+																{service.price || 'Ask us'}
+															</span>
+															<span
+																aria-hidden="true"
+																className={`absolute top-4 right-4 grid size-5 place-items-center rounded-full border text-[0.65rem] ${
+																	selected
+																		? 'border-accent bg-accent text-canvas'
+																		: 'border-ink/15 text-transparent'
+																}`}
+															>
+																✓
+															</span>
+														</label>
+													)
+												})}
 											</div>
+										</fieldset>
+
+										<fieldset className="space-y-4">
+											<legend className="h4 mb-1">Choose your preferred date</legend>
+											<p className="text-sm leading-relaxed text-ink/60">
+												The calendar shows both systems together. Heart-marked dates are
+												commonly observed Sunnah days.
+											</p>
+											<div className="max-w-xl">
+												<SunnahCalendar
+													maxDate={maxDate}
+													minDate={minDate}
+													onSelect={(date) =>
+														setFormData((current) => ({ ...current, date }))
+													}
+													selectedValue={formData.date}
+												/>
+											</div>
+										</fieldset>
+
+										<fieldset className="space-y-5">
 											<label className="block space-y-2 text-sm font-medium">
 												<span>Preferred time</span>
 												<select
@@ -356,15 +394,29 @@ export default function AppointmentFormModule({
 												</select>
 											</label>
 											{hijriDate && (
-												<div className="clinic-note" role="status">
-													<p className="font-semibold">
-														{hijriDate.day} {hijriDate.month} {hijriDate.year}{' '}
-														AH
-													</p>
-													<p className="text-ink/70 mt-1">
+												<div className="clinic-note grid gap-4 sm:grid-cols-2" role="status">
+													<div>
+														<p className="clinic-kicker">Gregorian date</p>
+														<p className="mt-2 font-serif text-xl font-semibold">
+															{selectedDate?.toLocaleDateString('en-US', {
+																weekday: 'long',
+																month: 'long',
+																day: 'numeric',
+																year: 'numeric',
+															})}
+														</p>
+													</div>
+													<div>
+														<p className="clinic-kicker">Hijri date</p>
+														<p className="mt-2 font-serif text-xl font-semibold">
+													{hijriDate.day} {hijriDate.month} {hijriDate.year}{' '}
+													AH
+														</p>
+													</div>
+													<p className="text-ink/70 sm:col-span-2">
 														{selectedDayIsSunnah
 															? 'This is a Sunnah day for Hijama. We will still confirm suitability as part of your booking.'
-															: 'Hijri date shown for your reference. Sunnah-day guidance is available below.'}
+															: 'This date is available to request. Heart-marked Sunnah dates are shown directly in the calendar.'}
 													</p>
 												</div>
 											)}
@@ -462,14 +514,16 @@ export default function AppointmentFormModule({
 				</div>
 
 				<aside className="space-y-5 lg:sticky lg:top-28">
-					<SunnahCalendar
-						maxDate={maxDate}
-						minDate={minDate}
-						onSelect={(date) =>
-							setFormData((current) => ({ ...current, date }))
-						}
-						selectedValue={formData.date}
-					/>
+					{step === 1 && (
+						<SunnahCalendar
+							maxDate={maxDate}
+							minDate={minDate}
+							onSelect={(date) =>
+								setFormData((current) => ({ ...current, date }))
+							}
+							selectedValue={formData.date}
+						/>
+					)}
 
 					{locationInfo && (
 						<div className="clinic-shell">
