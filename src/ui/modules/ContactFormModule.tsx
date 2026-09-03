@@ -61,14 +61,7 @@ export default function ContactFormModule({
 	reasonOptions,
 	contactInfo,
 	socialLinks,
-	messages = {
-		success:
-			'Your message has been sent. The clinic will get back to you soon.',
-		error:
-			'Your message could not be sent. Please try again or use the contact details on this page.',
-		submitButton: 'Send message',
-		submittingButton: 'Sending…',
-	},
+	messages,
 	_key,
 	...props
 }: ContactFormModuleProps) {
@@ -78,18 +71,33 @@ export default function ContactFormModule({
 		'Preparation question',
 	]
 	const reasons = reasonOptions?.length ? reasonOptions : fallbackReasons
+	const messageCopy = {
+		success:
+			'Your message has been sent. The clinic will get back to you soon.',
+		error:
+			'Your message could not be sent. Please try again or use the contact details on this page.',
+		submitButton: 'Send message',
+		submittingButton: 'Sending…',
+		...(messages || {}),
+	}
 
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		message: '',
 		reason: reasons[0] || 'General Inquiry',
+		consent: false,
+		website: '',
 		gCaptchaResponse: '',
 	})
 
 	const [status, setStatus] = useState<
 		'idle' | 'submitting' | 'success' | 'error'
 	>('idle')
+	const [reference, setReference] = useState('')
+	const [confirmationSent, setConfirmationSent] = useState<boolean | null>(null)
+	const [errorMessage, setErrorMessage] = useState('')
+	const formEndpoint = endpoint || '/api/forms/contact'
 
 	const handleChange = (
 		e: React.ChangeEvent<
@@ -97,12 +105,17 @@ export default function ContactFormModule({
 		>,
 	) => {
 		const { name, value } = e.target
-		setFormData((prev) => ({ ...prev, [name]: value }))
+		const nextValue =
+			e.target instanceof HTMLInputElement && e.target.type === 'checkbox'
+				? e.target.checked
+				: value
+		setFormData((prev) => ({ ...prev, [name]: nextValue }))
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setStatus('submitting')
+		setErrorMessage('')
 
 		try {
 			let submitData = { ...formData }
@@ -119,29 +132,39 @@ export default function ContactFormModule({
 				}
 			}
 
-			const res = await fetch(endpoint!, {
+			const res = await fetch(formEndpoint, {
 				method: 'POST',
-				headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+				headers: {
+					'Content-Type': formEndpoint.startsWith('/')
+						? 'application/json'
+						: 'text/plain;charset=utf-8',
+				},
 				body: JSON.stringify(submitData),
 			})
 
-			if (!res.ok) throw new Error('Submission failed')
+			const result = (await res.json()) as {
+				message?: string
+				reference?: string
+				confirmationSent?: boolean
+			}
+			if (!res.ok) throw new Error(result.message || 'Submission failed')
 
+			setReference(result.reference || '')
+			setConfirmationSent(result.confirmationSent ?? null)
 			setStatus('success')
 			setFormData({
 				name: '',
 				email: '',
 				message: '',
 				reason: reasons[0] || 'General Inquiry',
+				consent: false,
+				website: '',
 				gCaptchaResponse: '',
 			})
-
-			// Reset status after 5 seconds
-			setTimeout(() => setStatus('idle'), 5000)
 		} catch (err) {
 			console.error('Form submission error:', err)
+			setErrorMessage(err instanceof Error ? err.message : '')
 			setStatus('error')
-			setTimeout(() => setStatus('idle'), 5000)
 		}
 	}
 
@@ -254,6 +277,15 @@ export default function ContactFormModule({
 							className="space-y-6"
 							aria-busy={status === 'submitting'}
 						>
+							<input
+								aria-hidden="true"
+								autoComplete="off"
+								className="absolute -left-[9999px]"
+								name="website"
+								onChange={handleChange}
+								tabIndex={-1}
+								value={formData.website}
+							/>
 							<div className="grid gap-6 sm:grid-cols-2">
 								<div className="space-y-2">
 									<label
@@ -333,18 +365,41 @@ export default function ContactFormModule({
 								/>
 							</div>
 
+							<label className="clinic-note flex items-start gap-3 text-sm leading-relaxed">
+								<input
+									checked={formData.consent}
+									className="mt-1"
+									name="consent"
+									onChange={handleChange}
+									required
+									type="checkbox"
+								/>
+								<span>
+									I agree that the clinic may use these details to reply to my
+									enquiry. Please do not include urgent or highly sensitive
+									medical information.
+								</span>
+							</label>
+
 							<div aria-live="polite" aria-atomic="true">
 								{status === 'success' && (
-									<p role="status" className="clinic-note text-ink">
-										{messages.success}
-									</p>
+									<div role="status" className="clinic-note text-ink space-y-2">
+										<p>
+											{confirmationSent === false
+												? 'Your message reached the clinic, but we could not send the acknowledgment email. Please save the reference below.'
+												: messageCopy.success}
+										</p>
+										{reference && (
+											<p className="font-semibold">Reference: {reference}</p>
+										)}
+									</div>
 								)}
 								{status === 'error' && (
 									<p
 										role="alert"
 										className="border-clinic-clay/30 bg-clinic-clay/10 text-ink rounded-xl border p-4"
 									>
-										{messages.error}
+										{errorMessage || messageCopy.error}
 									</p>
 								)}
 							</div>
@@ -352,18 +407,12 @@ export default function ContactFormModule({
 							<button
 								type="submit"
 								className="action w-full sm:w-auto"
-								disabled={status === 'submitting' || !endpoint}
+								disabled={status === 'submitting'}
 							>
 								{status === 'submitting'
-									? messages.submittingButton
-									: messages.submitButton}
+									? messageCopy.submittingButton
+									: messageCopy.submitButton}
 							</button>
-							{!endpoint && (
-								<p className="text-clinic-stone text-sm leading-relaxed">
-									Online enquiries are not available yet. Please use the contact
-									details on this page.
-								</p>
-							)}
 						</form>
 					</div>
 				</div>
