@@ -7,6 +7,7 @@ import CTAList from '@/ui/CTAList'
 import Toggle from './Toggle'
 import { cn } from '@/lib/utils'
 import css from './Header.module.css'
+import ThemeToggle from '@/ui/ThemeToggle'
 
 export default async function Header() {
 	const { title, logo, ctas } = await getSite()
@@ -18,7 +19,7 @@ export default async function Header() {
 			<div
 				className={cn(
 					css.header,
-					'bg-canvas/92 ring-ink/8 mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 backdrop-blur-lg transition-shadow duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] max-md:header-open:rounded-[2rem] max-md:header-open:shadow-[0_24px_60px_rgb(24_53_43_/_0.16)] md:px-7',
+					'bg-canvas/92 ring-ink/8 max-md:header-open:rounded-[2rem] max-md:header-open:shadow-[0_24px_60px_rgb(24_53_43_/_0.16)] mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 backdrop-blur-lg transition-shadow duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:px-7',
 				)}
 			>
 				<div className="[grid-area:logo]">
@@ -36,7 +37,7 @@ export default async function Header() {
 									image={logoImage}
 									alt=""
 								/>
-								<span className="truncate text-lg leading-none font-semibold text-ink md:text-xl">
+								<span className="text-ink truncate text-lg leading-none font-semibold md:text-xl">
 									{title || logo?.name}
 								</span>
 							</>
@@ -55,7 +56,10 @@ export default async function Header() {
 					className="max-md:header-closed:hidden [grid-area:ctas] max-md:*:w-full md:ms-auto"
 				/>
 
-				<Toggle />
+				<div className="flex items-center gap-1 [grid-area:controls] md:gap-2">
+					<ThemeToggle />
+					<Toggle />
+				</div>
 			</div>
 		</Wrapper>
 	)

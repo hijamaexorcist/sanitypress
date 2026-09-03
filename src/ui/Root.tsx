@@ -1,15 +1,11 @@
-'use client'
-
-import getLang from '@/lib/getLang'
+import { languages } from '@/lib/i18n'
 import type { ComponentProps } from 'react'
 
 export default function Root(props: ComponentProps<'html'>) {
-	const lang = getLang()
-
 	return (
 		<html
 			{...props}
-			lang={lang}
+			lang={languages?.[0] || 'en'}
 			data-scroll-behavior="smooth"
 			suppressHydrationWarning
 		/>
