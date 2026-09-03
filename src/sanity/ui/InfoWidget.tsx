@@ -42,6 +42,7 @@ export function InfoWidget({
 											}}
 											href={item.url}
 											target="_blank"
+											rel="noreferrer"
 											title={item.label}
 											key={key}
 										/>
@@ -62,7 +63,7 @@ export function InfoWidget({
 							{group.links.map((link, key) => (
 								<Stack space={4} paddingX={3} key={key}>
 									<Text size={1}>
-										<a href={link.url} target="_blank">
+										<a href={link.url} target="_blank" rel="noreferrer">
 											{link.label}
 										</a>
 									</Text>

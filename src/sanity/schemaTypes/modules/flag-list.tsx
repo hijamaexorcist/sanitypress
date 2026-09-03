@@ -47,7 +47,11 @@ export default defineType({
 						},
 						prepare: ({ content, image, ic0n }) => ({
 							title: getBlockText(content),
-							media: ic0n ? <img src={`https://ic0n.dev/${ic0n}`} /> : image,
+							media: ic0n ? (
+								<img alt="" src={`https://ic0n.dev/${ic0n}`} />
+							) : (
+								image
+							),
 						}),
 					},
 				}),

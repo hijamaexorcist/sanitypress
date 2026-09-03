@@ -37,7 +37,7 @@ export function TextInputWithPresets({
 				currentTarget: { value },
 			} as FormEvent<HTMLInputElement>)
 		},
-		[elementProps.onChange],
+		[elementProps],
 	)
 
 	const [prefixWidth, setPrefixWidth] = useState(0)

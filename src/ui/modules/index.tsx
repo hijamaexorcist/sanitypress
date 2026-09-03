@@ -83,8 +83,11 @@ export default function Modules({
 		<>
 			{modules?.map((module) => {
 				if (!module) return null
+				if (module.options?.hidden) return null
 
-				const Component = MODULE_MAP[module._type as keyof typeof MODULE_MAP] as React.ComponentType<any>
+				const Component = MODULE_MAP[
+					module._type as keyof typeof MODULE_MAP
+				] as React.ComponentType<any>
 
 				if (!Component) return null
 
@@ -97,7 +100,7 @@ export default function Modules({
 							createDataAttribute({
 								id: page._id,
 								type: page?._type,
-								path: `page[_key == "${module._key}"]`,
+								path: `modules[_key == "${module._key}"]`,
 							}).toString()
 						}
 						key={module._key}

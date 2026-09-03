@@ -15,7 +15,10 @@ export default async function Footer() {
 		<footer className="bg-ink text-canvas" role="contentinfo">
 			<div className="section flex flex-wrap justify-between gap-x-12 gap-y-8 max-sm:flex-col">
 				<div className="flex flex-col gap-3 self-stretch">
-					<Link className="h3 md:h2 max-w-max" href="/">
+					<Link
+						className="h3 md:h2 inline-flex min-h-11 max-w-max min-w-11 items-center"
+						href="/"
+					>
 						{logoImage ? (
 							<Img
 								className="max-h-[1.5em] w-auto"

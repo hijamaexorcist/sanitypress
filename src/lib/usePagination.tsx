@@ -44,7 +44,7 @@ export function usePagination<T extends unknown>({
 		prev = 'Prev',
 		next = 'Next',
 		hidePage,
-		onClick = () => {},
+		onClick,
 		...props
 	}: PaginationProps) => {
 		if ((atStart && atEnd) || !paginatedItems?.length) return null
@@ -55,7 +55,7 @@ export function usePagination<T extends unknown>({
 					className={prevClassName || buttonClassName}
 					onClick={() => {
 						onPrev()
-						onClick()
+						onClick?.()
 					}}
 					disabled={atStart}
 				>
@@ -72,7 +72,7 @@ export function usePagination<T extends unknown>({
 					className={nextClassName || buttonClassName}
 					onClick={() => {
 						onNext()
-						onClick()
+						onClick?.()
 					}}
 					disabled={atEnd}
 				>

@@ -6,11 +6,13 @@ import { cn } from '@/lib/utils'
 export default async function Menu() {
 	const { headerMenu } = await getSite()
 
-	const parentClassName = cn('text-sm text-ink/70 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-ink md:px-3 md:text-center md:leading-tight')
+	const parentClassName = cn(
+		'flex min-h-11 items-center text-sm text-ink/70 transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-ink md:px-3 md:text-center md:leading-tight',
+	)
 
 	return (
 		<nav
-		className="max-md:anim-fade-to-r max-md:header-closed:hidden flex gap-y-2 [grid-area:nav] max-md:my-5 max-md:flex-col md:justify-center"
+			className="max-md:anim-fade-to-r max-md:header-closed:hidden flex gap-y-2 [grid-area:nav] max-md:my-5 max-md:flex-col md:justify-center"
 			role="navigation"
 		>
 			{headerMenu?.items?.map((item, key) => {

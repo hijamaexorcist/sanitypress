@@ -132,6 +132,38 @@ The public catalogue names `Neural Noise`, `Oceanic`, `Wave`, `Glow Horizon`, `A
 - **VERIFIED:** 21st’s public catalogue includes the component categories and pattern names listed above [S2–S4]. This supports using it as a pattern source rather than a component dumping ground.
 - **UNVERIFIED:** Competitor site comparison is incomplete. Public search access in this session did not yield reliable representative Muslim/Hijama clinic pages, so this report does not claim market-wide competitor findings. A targeted round can be run once a shortlist of three clinics or regions is supplied.
 
+## Implementation Audit — 2026-09-03
+
+### Current assessment
+
+The public experience now has a consistent design language: mineral canvas, deep olive ink and actions, eucalyptus/mist surfaces, restrained clay focus accents, DM Serif Display for editorial headings, and Instrument Sans for body and controls. The characteristic element is the softly framed clinic shell used for imagery, care information, and forms. This reads as a quiet clinical ritual rather than a SaaS template.
+
+The active homepage is intentionally short: one clinic-led hero, a three-part visit journey, and three care standards. Template hero variants, placeholder practitioner content, unverified pricing/testimonials/FAQ, and the empty article list are hidden. The remaining visual limitation is content, not layout: the hero uses a replaceable environmental image because no approved practitioner portrait or verified credentials were supplied.
+
+### Completed in this pass
+
+- Corrected Sanity preview behavior so draft/stega data appears only in Next draft mode.
+- Applied module `hidden` options consistently and corrected module visual-editing paths.
+- Prevented CMS-only properties from leaking onto DOM elements.
+- Added persistent labels, autocomplete hints, announced states, 48px controls, and clinic styling to the contact form.
+- Added meaningful/empty image alternatives, safer external-link relations, and accessible navigation target sizes.
+- Verified one main landmark, one H1, labelled controls, image alternatives, and no horizontal overflow at desktop and 390px mobile widths across Home, About, Booking, Contact, Ruqyah, Journal, and 404.
+- Moved the three existing articles back to drafts because they contain unreviewed health, fertility, postpartum mental-health, detoxification, and outcome claims. The journal now presents a clear review-pending state and is removed from primary navigation.
+
+### SanityPress component inventory
+
+The local project contains all 24 modules in upstream Sanitypress at commit `fbc2f0d` (2026-05-30), plus five clinic-specific modules, for 29 total. Every schema module has a public renderer.
+
+Recommended for this project: Hero, Hero Split, restrained Hero SaaS, Richtext, Accordion list, Card list, Flag list, Step list, Blog list/frontpage, Contact form, Appointment form, Care journey, Care standards, and Text highlight. Pricing and testimonials should be used only after facts and consent are verified. Logo/stat/reputation modules need real evidence. Custom HTML, dense SaaS compositions, and decorative shader-heavy patterns should generally be avoided.
+
+### Owner-confirmation launch blockers
+
+- Confirm the clinic location conflict: Booking says Piscataway, New Jersey; Contact says Bronx, New York.
+- Confirm every price, session duration, time slot, deposit rule, payment recipient, phone number, address, and preparation instruction before launch.
+- Supply the practitioner’s real name, approved portrait, training/certifications, scope of practice, and documented hygiene/disposal process before publishing practitioner or safety claims.
+- Have a qualified clinical reviewer and an appropriate religious reviewer approve the three draft articles before republishing them.
+- Confirm the production domain, then add that exact origin to Sanity CORS and production environment configuration.
+
 ## Sources
 
 - **[S1]** National Center for Complementary and Integrative Health, “Cupping,” accessed 2026-08-10. https://www.nccih.nih.gov/health/cupping

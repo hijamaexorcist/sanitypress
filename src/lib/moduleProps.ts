@@ -1,16 +1,15 @@
 import { stegaClean } from 'next-sanity'
-import { dev } from './env'
 
 export default function ({
 	_type,
 	options,
 	_key,
-	...props
-}: Partial<Sanity.Module>) {
+	'data-sanity': dataSanity,
+}: Partial<Sanity.Module> & { 'data-sanity'?: string }) {
 	return {
 		id: stegaClean(options?.uid) || 'module-' + _key,
 		'data-module': _type,
-		hidden: !dev && options?.hidden,
-		...props,
+		'data-sanity': dataSanity,
+		hidden: options?.hidden,
 	}
 }

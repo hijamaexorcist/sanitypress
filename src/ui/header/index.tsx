@@ -18,12 +18,15 @@ export default async function Header() {
 			<div
 				className={cn(
 					css.header,
-					'bg-canvas/92 mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 ring-ink/8 backdrop-blur-lg md:px-7',
+					'bg-canvas/92 ring-ink/8 mx-auto grid max-w-screen-xl items-center gap-x-6 rounded-full px-5 py-3 shadow-[0_16px_38px_rgb(35_51_43_/_0.08)] ring-1 backdrop-blur-lg md:px-7',
 				)}
 			>
 				<div className="[grid-area:logo]">
 					<Link
-						className={cn('font-serif text-2xl tracking-[-0.04em] md:text-3xl', logo?.image && 'max-w-3xs')}
+						className={cn(
+							'inline-flex min-h-11 min-w-11 items-center font-serif text-2xl tracking-[-0.04em] md:text-3xl',
+							logo?.image && 'max-w-3xs',
+						)}
 						href="/"
 					>
 						{logoImage ? (

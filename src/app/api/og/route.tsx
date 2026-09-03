@@ -15,61 +15,60 @@ export async function GET(request: NextRequest) {
 	const title = searchParams.get('title')?.replace(regex, '')
 
 	return new ImageResponse(
-		(
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				width: '100%',
+				height: '100%',
+				padding: '4rem',
+				backgroundColor: '#fff',
+				color: '#1d1d1f',
+			}}
+		>
+			<div
+				style={{
+					display: 'block',
+					marginTop: 'auto',
+					marginBottom: 'auto',
+					fontSize: '5rem',
+					lineHeight: 1.15,
+					lineClamp: 4,
+				}}
+			>
+				{title || site.title}
+			</div>
+
 			<div
 				style={{
 					display: 'flex',
-					flexDirection: 'column',
-					width: '100%',
-					height: '100%',
-					padding: '4rem',
-					backgroundColor: '#fff',
-					color: '#1d1d1f',
+					alignItems: 'center',
+					textAlign: 'center',
+					fontSize: '2rem',
 				}}
 			>
-				<div
+				<img
+					alt=""
 					style={{
-						display: 'block',
-						marginTop: 'auto',
-						marginBottom: 'auto',
-						fontSize: '5rem',
-						lineHeight: 1.15,
-						lineClamp: 4,
+						width: '2rem',
+						height: '2rem',
+						marginRight: '0.5rem',
+					}}
+					src={`https://ic0n.dev/vsc/VscHeartFilled?hex=${color.slice(1)}`}
+				/>
+
+				<span
+					style={{
+						lineHeight: 1.4,
+						backgroundImage: `linear-gradient(to bottom right, ${color}, ${color}55)`,
+						backgroundClip: 'text',
+						color: 'transparent',
 					}}
 				>
-					{title || site.title}
-				</div>
-
-				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						textAlign: 'center',
-						fontSize: '2rem',
-					}}
-				>
-					<img
-						style={{
-							width: '2rem',
-							height: '2rem',
-							marginRight: '0.5rem',
-						}}
-						src={`https://ic0n.dev/vsc/VscHeartFilled?hex=${color.slice(1)}`}
-					/>
-
-					<span
-						style={{
-							lineHeight: 1.4,
-							backgroundImage: `linear-gradient(to bottom right, ${color}, ${color}55)`,
-							backgroundClip: 'text',
-							color: 'transparent',
-						}}
-					>
-						{domain || site.title}
-					</span>
-				</div>
+					{domain || site.title}
+				</span>
 			</div>
-		),
+		</div>,
 		{
 			fonts: [
 				{

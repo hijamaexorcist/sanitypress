@@ -28,7 +28,7 @@ export default function HeroSplit({
 			<figure
 				className={cn(
 					'clinic-shell overflow-hidden',
-					asset?._type === 'img' && 'max-md:full-bleed',
+					asset?._type === 'img' && 'max-md:-mx-6 max-md:w-[calc(100%+3rem)]',
 					assetOnRight ? 'md:order-1' : 'order-first max-md:order-last',
 					assetBelowContent && 'max-md:order-last',
 				)}

@@ -10,7 +10,13 @@ export default async function Menu() {
 			{footerMenu?.items?.map((item, key) => {
 				switch (item._type) {
 					case 'link':
-						return <CTA className="hover:link" link={item} key={key} />
+						return (
+							<CTA
+								className="hover:link inline-flex min-h-11 items-center"
+								link={item}
+								key={key}
+							/>
+						)
 
 					case 'link.list':
 						return (
@@ -25,7 +31,7 @@ export default async function Menu() {
 									{item.links?.map((link, key) => (
 										<li key={key}>
 											<CTA
-												className="inline-block py-px hover:underline"
+												className="inline-flex min-h-11 items-center hover:underline"
 												link={link}
 											/>
 										</li>

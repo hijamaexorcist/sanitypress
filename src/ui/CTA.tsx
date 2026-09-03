@@ -13,8 +13,22 @@ export default function CTA({
 	children,
 	...rest
 }: Sanity.CTA & ComponentProps<'a'>) {
-	const label = children || link?.label || link?.internal?.title || link?.external
+	const label =
+		children || link?.label || link?.internal?.title || link?.external
 	const isPrimary = stegaClean(style) === 'action'
+	const content = isPrimary ? (
+		<>
+			<span>{label}</span>
+			<span
+				aria-hidden="true"
+				className="bg-canvas/15 grid size-7 place-items-center rounded-full text-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px"
+			>
+				↗
+			</span>
+		</>
+	) : (
+		label
+	)
 	const props = {
 		className:
 			cn(
@@ -22,19 +36,6 @@ export default function CTA({
 				isPrimary && 'group gap-3 justify-between',
 				className,
 			) || undefined,
-		children: isPrimary ? (
-			<>
-				<span>{label}</span>
-				<span
-					aria-hidden="true"
-					className="grid size-7 place-items-center rounded-full bg-canvas/15 text-lg transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-px"
-				>
-					↗
-				</span>
-			</>
-		) : (
-			label
-		),
 		...rest,
 	}
 
@@ -46,11 +47,17 @@ export default function CTA({
 					params: link.params,
 				})}
 				{...props}
-			/>
+			>
+				{content}
+			</Link>
 		)
 
 	if (link?.type === 'external' && link.external)
-		return <a href={stegaClean(link.external)} {...props} />
+		return (
+			<a href={stegaClean(link.external)} {...props}>
+				{content}
+			</a>
+		)
 
-	return <div {...(props as ComponentProps<'div'>)} />
+	return <div {...(props as ComponentProps<'div'>)}>{content}</div>
 }

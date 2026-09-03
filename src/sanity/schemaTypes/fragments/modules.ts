@@ -4,9 +4,9 @@ export default defineField({
 	name: 'modules',
 	description: 'Page content',
 	type: 'array',
-			of: [
-				{ type: 'accordion-list' },
-				{ type: 'blog-frontpage' },
+	of: [
+		{ type: 'accordion-list' },
+		{ type: 'blog-frontpage' },
 		{ type: 'blog-list' },
 		{ type: 'blog-post-content' },
 		{ type: 'breadcrumbs' },
@@ -27,14 +27,14 @@ export default defineField({
 		{ type: 'stat-list' },
 		{ type: 'step-list' },
 		{ type: 'tabbed-content' },
-				{ type: 'testimonial-list' },
-				{ type: 'testimonial.featured' },
-				{ type: 'text-highlight-module' },
-				{ type: 'contact-form-module' },
-				{ type: 'appointment-form-module' },
-				{ type: 'care-journey' },
-				{ type: 'care-standards' },
-			],
+		{ type: 'testimonial-list' },
+		{ type: 'testimonial.featured' },
+		{ type: 'text-highlight-module' },
+		{ type: 'contact-form-module' },
+		{ type: 'appointment-form-module' },
+		{ type: 'care-journey' },
+		{ type: 'care-standards' },
+	],
 	options: {
 		insertMenu: {
 			views: [

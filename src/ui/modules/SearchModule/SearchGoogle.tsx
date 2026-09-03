@@ -22,7 +22,12 @@ export default function SearchGoogle({
 
 	return (
 		<p className="text-ink/50 text-center text-sm">
-			<a className="hover:underline" href={href} target="_blank">
+			<a
+				className="hover:underline"
+				href={href}
+				target="_blank"
+				rel="noreferrer"
+			>
 				Search on Google
 			</a>
 		</p>

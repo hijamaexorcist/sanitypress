@@ -33,7 +33,7 @@ export default async function Code({
 
 	const [path, filename] = value.filename?.includes('/')
 		? value.filename.split(/(.*)\/(.*)$/).filter(Boolean)
-		: [, value.filename]
+		: [undefined, value.filename]
 
 	return (
 		<article
