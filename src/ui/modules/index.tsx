@@ -80,6 +80,8 @@ export default function Modules({
 				return { post }
 			case 'breadcrumbs':
 				return { currentPage: post || page }
+			case 'blog-list':
+				return { language: page?.language }
 			default:
 				return {}
 		}

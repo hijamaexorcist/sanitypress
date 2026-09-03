@@ -1,5 +1,4 @@
-import { cookies } from 'next/headers'
-import { DEFAULT_LANG, langCookieName } from '@/lib/i18n'
+import { DEFAULT_LANG } from '@/lib/i18n'
 import { fetchSanityLive } from '@/sanity/lib/fetch'
 import { groq } from 'next-sanity'
 import { IMAGE_QUERY } from '@/sanity/lib/queries'
@@ -20,6 +19,7 @@ export default async function BlogList({
 	showFeaturedPostsFirst,
 	displayFilters,
 	filteredCategory,
+	language,
 	...props
 }: Partial<{
 	pretitle: string
@@ -29,9 +29,10 @@ export default async function BlogList({
 	showFeaturedPostsFirst: boolean
 	displayFilters: boolean
 	filteredCategory: Sanity.BlogCategory
+	language: string
 }> &
 	Sanity.Module) {
-	const lang = (await cookies()).get(langCookieName)?.value ?? DEFAULT_LANG
+	const lang = language ?? DEFAULT_LANG
 
 	const posts = await fetchSanityLive<Sanity.BlogPost[]>({
 		query: groq`
