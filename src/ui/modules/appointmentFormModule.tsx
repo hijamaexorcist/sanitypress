@@ -4,6 +4,7 @@ import { useState } from 'react'
 import moduleProps from '@/lib/moduleProps'
 import { getRecaptchaToken } from '@/lib/recaptcha'
 import { getHijriDate, isSunnahDay } from '@/lib/hijri'
+import GeistSunnahCalendar from './GeistSunnahCalendar'
 
 interface AppointmentFormModuleProps {
 	title?: string
@@ -362,11 +363,11 @@ export default function AppointmentFormModule({
 												Choose your preferred date
 											</legend>
 											<p className="text-ink/60 text-sm leading-relaxed">
-												The calendar shows both systems together. Heart-marked
+												The calendar shows both systems together. Green-heart
 												dates are commonly observed Sunnah days.
 											</p>
 											<div className="max-w-xl">
-												<SunnahCalendar
+												<GeistSunnahCalendar
 													maxDate={maxDate}
 													minDate={minDate}
 													onSelect={(date) =>
@@ -520,7 +521,7 @@ export default function AppointmentFormModule({
 
 				<aside className="space-y-5 lg:sticky lg:top-28">
 					{step === 1 && (
-						<SunnahCalendar
+						<GeistSunnahCalendar
 							maxDate={maxDate}
 							minDate={minDate}
 							onSelect={(date) =>
@@ -632,201 +633,6 @@ export default function AppointmentFormModule({
 				</aside>
 			</div>
 		</section>
-	)
-}
-
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-function toDateInputValue(date: Date) {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-	return `${year}-${month}-${day}`
-}
-
-function SunnahCalendar({
-	minDate,
-	maxDate,
-	selectedValue,
-	onSelect,
-}: {
-	minDate: string
-	maxDate: string
-	selectedValue: string
-	onSelect: (date: string) => void
-}) {
-	const firstAvailable = asLocalDate(minDate)
-	const lastAvailable = asLocalDate(maxDate)
-	const firstMonth = new Date(
-		firstAvailable.getFullYear(),
-		firstAvailable.getMonth(),
-		1,
-	)
-	const lastMonth = new Date(
-		lastAvailable.getFullYear(),
-		lastAvailable.getMonth(),
-		1,
-	)
-	const [visibleMonth, setVisibleMonth] = useState(firstMonth)
-	const year = visibleMonth.getFullYear()
-	const month = visibleMonth.getMonth()
-	const leadingDays = new Date(year, month, 1).getDay()
-	const daysInMonth = new Date(year, month + 1, 0).getDate()
-	const calendarDays = [
-		...Array.from<null>({ length: leadingDays }).fill(null),
-		...Array.from(
-			{ length: daysInMonth },
-			(_, index) => new Date(year, month, index + 1),
-		),
-	]
-	const monthStartHijri = getHijriDate(new Date(year, month, 1))
-	const monthEndHijri = getHijriDate(new Date(year, month + 1, 0))
-	const hijriRange =
-		monthStartHijri.month === monthEndHijri.month
-			? `${monthStartHijri.month} ${monthEndHijri.year} AH`
-			: `${monthStartHijri.month} – ${monthEndHijri.month} ${monthEndHijri.year} AH`
-	const canGoBack = visibleMonth > firstMonth
-	const canGoForward = visibleMonth < lastMonth
-
-	function changeMonth(offset: number) {
-		setVisibleMonth(new Date(year, month + offset, 1))
-	}
-
-	return (
-		<div className="clinic-shell overflow-hidden">
-			<div className="clinic-core relative overflow-hidden p-3">
-				<div
-					aria-hidden="true"
-					className="bg-clinic-sage/55 pointer-events-none absolute -top-20 -right-16 size-52 rounded-full blur-3xl"
-				/>
-
-				<div className="relative">
-					<div className="flex items-center justify-between gap-4">
-						<div>
-							<p className="clinic-kicker">Plan around the lunar month</p>
-							<h2 className="mt-1 font-serif text-2xl leading-none tracking-[-0.035em]">
-								Sunnah days
-							</h2>
-						</div>
-						<span
-							aria-hidden="true"
-							className="emoji-glyph bg-clinic-sage/70 ring-accent/10 grid size-8 shrink-0 place-items-center rounded-full text-sm shadow-[0_8px_20px_rgb(24_53_43_/_0.12)] ring-1"
-						>
-							💚
-						</span>
-					</div>
-
-					<p className="text-ink/65 mt-2 text-[0.7rem] leading-snug">
-						💚 marks lunar days 13, 14, 15, 17, 19 and 21. Any available day can
-						be requested.
-					</p>
-
-					<div className="border-ink/8 bg-canvas/70 mt-3 rounded-2xl border p-1.5 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.8)]">
-						<div className="flex items-center justify-between gap-2 pb-1">
-							<button
-								aria-label="Show previous month"
-								className="text-ink/65 hover:bg-clinic-sage/60 grid size-7 place-items-center rounded-full text-sm transition disabled:cursor-not-allowed disabled:opacity-25"
-								disabled={!canGoBack}
-								onClick={() => changeMonth(-1)}
-								type="button"
-							>
-								<span aria-hidden="true">←</span>
-							</button>
-							<div className="text-center">
-								<p className="font-serif text-base font-semibold">
-									{visibleMonth.toLocaleDateString('en-US', {
-										month: 'long',
-										year: 'numeric',
-									})}
-								</p>
-								<p className="text-ink/45 text-[0.58rem] font-semibold tracking-wide uppercase">
-									{hijriRange}
-								</p>
-							</div>
-							<button
-								aria-label="Show next month"
-								className="text-ink/65 hover:bg-clinic-sage/60 grid size-7 place-items-center rounded-full text-sm transition disabled:cursor-not-allowed disabled:opacity-25"
-								disabled={!canGoForward}
-								onClick={() => changeMonth(1)}
-								type="button"
-							>
-								<span aria-hidden="true">→</span>
-							</button>
-						</div>
-
-						<div className="text-ink/40 grid grid-cols-7 text-center text-[0.58rem] font-bold tracking-wider uppercase">
-							{WEEKDAYS.map((weekday) => (
-								<span className="py-0.5" key={weekday}>
-									{weekday.slice(0, 1)}
-								</span>
-							))}
-						</div>
-
-						<div
-							aria-label={`${visibleMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} appointment calendar`}
-							className="grid grid-cols-7 gap-0.5"
-							role="group"
-						>
-							{calendarDays.map((date, index) => {
-								if (!date)
-									return <span aria-hidden="true" key={`empty-${index}`} />
-
-								const value = toDateInputValue(date)
-								const available =
-									date >= firstAvailable && date <= lastAvailable
-								const sunnahDay = isSunnahDay(date)
-								const selected = selectedValue === value
-								const hijri = getHijriDate(date)
-
-								return (
-									<button
-										aria-label={`${date.toLocaleDateString('en-US', {
-											weekday: 'long',
-											month: 'long',
-											day: 'numeric',
-										})}, ${hijri.day} ${hijri.month}${sunnahDay ? ', Sunnah day' : ''}`}
-										aria-pressed={selected}
-										className={`relative grid h-7 place-items-center rounded-lg text-[0.68rem] font-semibold transition ${
-											selected
-												? 'bg-accent text-canvas shadow-[0_6px_14px_rgb(24_53_43_/_0.2)]'
-												: sunnahDay && available
-													? 'bg-clinic-sage/70 text-ink ring-accent/15 hover:bg-clinic-sage ring-1'
-													: 'text-ink/65 hover:bg-clinic-sage/45'
-										} disabled:cursor-not-allowed disabled:opacity-20`}
-										disabled={!available}
-										key={value}
-										onClick={() => onSelect(value)}
-										type="button"
-									>
-										{sunnahDay && available && (
-											<span
-												aria-hidden="true"
-												className="emoji-glyph absolute -top-0.5 right-0.5 text-[0.48rem] leading-none"
-											>
-												💚
-											</span>
-										)}
-										<span>{date.getDate()}</span>
-									</button>
-								)
-							})}
-						</div>
-					</div>
-
-					<div className="text-ink/55 mt-2 flex items-center justify-between gap-3 text-[0.68rem]">
-						<span className="inline-flex items-center gap-2">
-							<span aria-hidden="true" className="emoji-glyph text-xs">
-								💚
-							</span>
-							Commonly observed Sunnah date
-						</span>
-						{selectedValue && (
-							<span className="text-accent font-semibold">Selected</span>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
 	)
 }
 
