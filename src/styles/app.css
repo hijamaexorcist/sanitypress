@@ -210,6 +210,12 @@ html[data-theme='light'] {
 	font-weight: bold;
 }
 
+@utility emoji-glyph {
+	font-family:
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+	font-variant-emoji: emoji;
+}
+
 @utility text-shadow {
 	text-shadow: 0 0 0.2em rgb(0 0 0 / 0.25);
 }
