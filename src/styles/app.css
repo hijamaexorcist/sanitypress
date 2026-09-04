@@ -10,6 +10,8 @@
 	--color-clinic-mist: #e9ede6;
 	--color-clinic-clay: #b96e52;
 	--color-clinic-stone: #6f786f;
+	--color-footer: #18352b;
+	--color-footer-ink: #f5f4ed;
 	--font-sans: 'Instrument Sans', ui-sans-serif, sans-serif;
 	--font-serif: 'DM Serif Display', ui-serif, serif;
 
@@ -26,6 +28,8 @@ html[data-theme='dark'] {
 	--color-clinic-mist: #1b2a24;
 	--color-clinic-clay: #e09a7c;
 	--color-clinic-stone: #a6b0a8;
+	--color-footer: #0a1511;
+	--color-footer-ink: #edf1e8;
 	--clinic-shadow: rgb(0 0 0 / 0.34);
 	--clinic-highlight: rgb(237 241 232 / 0.07);
 }

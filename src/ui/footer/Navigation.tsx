@@ -21,7 +21,7 @@ export default async function Menu() {
 					case 'link.list':
 						return (
 							<div className="space-y-2 text-start" key={key}>
-								<div className="technical text-canvas/50 text-xs">
+								<div className="technical text-footer-ink/50 text-xs">
 									<CTA link={item.link}>
 										{stegaClean(item.link?.label) || item.link?.internal?.title}
 									</CTA>

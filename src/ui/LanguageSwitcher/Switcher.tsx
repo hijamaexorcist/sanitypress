@@ -37,7 +37,7 @@ export default function Switcher({
 			</span>
 
 			<select
-				className="input border-canvas/10 focus:border-canvas/30 px-[.5em] outline-none"
+				className="input border-current/15 focus:border-current/35 px-[.5em] outline-none"
 				value={pathname === available?.slug ? available.slug : pathname}
 				onChange={(e) => {
 					setLoading(true)
